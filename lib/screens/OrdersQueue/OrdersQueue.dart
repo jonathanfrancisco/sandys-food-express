@@ -4,6 +4,8 @@ import 'package:sandys_food_express/screens/OrdersQueue/widgets/QueuedOrder.dart
 import 'package:sandys_food_express/services/secureStorage.dart';
 
 class OrdersQueue extends StatefulWidget {
+  static final String routeName = '/orders-queue';
+
   @override
   OrdersQueueState createState() => OrdersQueueState();
 }

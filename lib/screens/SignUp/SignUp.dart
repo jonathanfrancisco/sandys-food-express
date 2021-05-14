@@ -8,6 +8,8 @@ import 'package:sandys_food_express/common/widgets/AppHeader.dart';
 import 'package:sandys_food_express/common/widgets/AppFooter.dart';
 
 class SignUp extends StatelessWidget {
+  static final routeName = '/sign-up';
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

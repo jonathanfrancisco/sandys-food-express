@@ -93,7 +93,7 @@ class SignInFormState extends State<SignInForm> {
 
                   try {
                     var httpResponse = await Dio()
-                        .post('http://192.168.254.104:3000/login', data: {
+                        .post('http://192.168.254.104:3000/sign-in', data: {
                       'email': _emailFieldController.text,
                       'password': _passwordFieldController.text,
                     });
@@ -118,8 +118,7 @@ class SignInFormState extends State<SignInForm> {
                           message: "Welcome $name Sandy's Food Express!",
                           onContinueOrCancel: () {
                             Navigator.of(context).pop();
-                            Navigator.pushReplacementNamed(
-                                context, '/orders-queue');
+                            Navigator.pushReplacementNamed(context, '/home');
                           },
                         );
                       },
@@ -128,6 +127,22 @@ class SignInFormState extends State<SignInForm> {
                     Navigator.of(context).pop(); // Pops loading dialog
                     var httpResponseBody = e.response?.data;
 
+                    if (httpResponseBody == null) {
+                      showAnimatedDialog(
+                        barrierDismissible: true,
+                        context: context,
+                        builder: (context) {
+                          return ResponseModal(
+                            type: 'ERROR',
+                            message:
+                                'Something weird happened.\nKeep calm and try again.',
+                            onContinueOrCancel: () {
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                      );
+                    }
                     String errorCode = httpResponseBody['error']['code'];
                     String errorMessage = httpResponseBody['error']['message'];
 
@@ -163,9 +178,6 @@ class SignInFormState extends State<SignInForm> {
                         },
                       );
                     }
-                  } catch (e) {
-                    debugPrint("err");
-                    debugPrint(e.toString());
                   }
                 }
               },
