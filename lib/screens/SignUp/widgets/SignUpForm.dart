@@ -4,7 +4,6 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:sandys_food_express/common/widgets/LoadingDialog.dart';
 import 'package:sandys_food_express/common/widgets/ResponseModal.dart';
 import 'package:sandys_food_express/constants.dart';
-import 'package:sandys_food_express/screens/SignIn/SignIn.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -42,8 +41,7 @@ class SignUpFormState extends State<SignUpForm> {
       );
 
       try {
-        var response =
-            await Dio().post('http://192.168.254.104:3000/sign-up', data: {
+        var response = await Dio().post('$apiHostEndpoint/sign-up', data: {
           'name': _nameFieldController.text,
           'email': _emailFieldController.text,
           'address': _addressFieldController.text,
@@ -51,7 +49,6 @@ class SignUpFormState extends State<SignUpForm> {
         });
         Navigator.of(context).pop(); // Pops loading dialog
 
-        debugPrint(response.data.toString());
         showAnimatedDialog(
           barrierDismissible: true,
           context: context,
