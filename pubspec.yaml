@@ -32,6 +32,10 @@ dependencies:
   dio: ^4.0.0
   flutter_animated_dialog: ^2.0.0
   flutter_secure_storage: ^4.1.0
+  intl: ^0.17.0
+  image_picker: ^0.7.5
+  dotted_border: ^2.0.0
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
