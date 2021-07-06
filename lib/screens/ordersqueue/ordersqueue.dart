@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sandys_food_express/common/widgets/GradientBackground.dart';
-import 'package:sandys_food_express/screens/OrdersQueue/widgets/QueuedOrder.dart';
+import 'package:sandys_food_express/common/widgets/gradient_background.dart';
+import 'package:sandys_food_express/screens/ordersqueue/widgets/queued_order.dart';
 import 'package:sandys_food_express/services/secureStorage.dart';
 
 class OrdersQueue extends StatefulWidget {

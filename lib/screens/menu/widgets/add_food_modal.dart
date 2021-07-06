@@ -6,17 +6,15 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sandys_food_express/common/widgets/LoadingDialog.dart';
-import 'package:sandys_food_express/common/widgets/ResponseModal.dart';
+import 'package:provider/provider.dart';
+import 'package:sandys_food_express/common/widgets/loading_dialog.dart';
+import 'package:sandys_food_express/common/widgets/response_modal.dart';
+import 'package:sandys_food_express/screens/menu/menu_view_model.dart';
 import 'package:sandys_food_express/services/secureStorage.dart';
 
 import '../../../constants.dart';
 
 class AddFoodModal extends StatefulWidget {
-  final Function _onAddFood;
-
-  AddFoodModal({required onAddFood}) : _onAddFood = onAddFood;
-
   @override
   AddFoodModalState createState() => AddFoodModalState();
 }
@@ -126,6 +124,7 @@ class AddFoodModalState extends State<AddFoodModal> {
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
+      // show loading dialog
       showDialog(
         barrierDismissible: false,
         context: context,
@@ -135,54 +134,41 @@ class AddFoodModalState extends State<AddFoodModal> {
       );
 
       try {
+        debugPrint('I was here before accessing provider');
+        MenuViewModel menuViewModel =
+            Provider.of<MenuViewModel>(context, listen: false);
+
+        debugPrint('After accessing provider');
         String foodImagePath = _foodImage?.path;
         String? foodImageFileName = _foodImage?.path.split('/').last;
+        String name = _nameFieldController.text;
+        double price = double.parse(_priceFieldController.text);
 
-        String uploadedFoodPictureS3Key = await _uploadFoodPictureToS3(
-            foodImageFileName as String, foodImagePath);
+        var response = await menuViewModel.addFood(
+            name, price, foodImageFileName, foodImagePath);
 
-        String accessToken =
-            await SecureStorage().readSecureData('accessToken');
-        dioClient.options.headers['Authorization'] = 'Bearer $accessToken';
-        String foodName = _nameFieldController.text;
-        double foodPrice = double.parse(_priceFieldController.text);
-        var addFoodHttpResponse = await this
-            .dioClient
-            .post('$apiHostEndpoint/menu/foods', data: {
-          'name': foodName,
-          'price': foodPrice,
-          'picture': uploadedFoodPictureS3Key
-        });
-        var addFoodHttpResponseBody = addFoodHttpResponse.data;
-        var addFoodHttpResponseStatus = addFoodHttpResponse.statusCode;
+        // Pops loading dialog
+        Navigator.of(context).pop();
 
-        Navigator.of(context).pop(); // Pops loading dialog
-
-        if (addFoodHttpResponseStatus == 201) {
-          await showAnimatedDialog(
-            barrierDismissible: true,
-            context: context,
-            builder: (context) {
-              return ResponseModal(
-                type: 'SUCCESS',
-                message:
-                    'You have successfully added ${addFoodHttpResponseBody["data"]["name"]}',
-                onContinueOrCancel: () {
-                  Navigator.of(context).pop(); // pop success add modal
-                  Navigator.of(context).pop(); // pop add food modal
-                },
-              );
-            },
-          );
-          this.widget._onAddFood();
-        }
+        await showAnimatedDialog(
+          barrierDismissible: true,
+          context: context,
+          builder: (context) {
+            return ResponseModal(
+              type: 'SUCCESS',
+              message: 'You have successfully added food $name',
+              onContinueOrCancel: () {
+                Navigator.of(context).pop(); // pop success add modal
+                Navigator.of(context).pop(); // pop add food modal
+              },
+            );
+          },
+        );
+        await menuViewModel.loadFoods();
       } on DioError catch (e) {
         debugPrint(e.toString());
         Navigator.of(context).pop(); // Pops loading dialog
-        var httpResponseBody = e.response?.data;
       }
-
-      // refresh menu table
     }
   }
 

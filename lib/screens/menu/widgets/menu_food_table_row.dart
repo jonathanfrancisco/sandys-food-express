@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sandys_food_express/constants.dart';
+
+import '../menu_view_model.dart';
 
 class MenuFoodTableRow extends StatefulWidget {
   final int _id;
   final String _name;
   final double _price;
   final String _picture;
-  final void Function(int) _onDeleteFood;
 
-  MenuFoodTableRow(
-      {required int id,
-      required String name,
-      required double price,
-      required String picture,
-      required void Function(int) onDeleteFood})
-      : _id = id,
+  MenuFoodTableRow({
+    required int id,
+    required String name,
+    required double price,
+    required String picture,
+  })   : _id = id,
         _name = name,
         _price = price,
-        _picture = picture,
-        _onDeleteFood = onDeleteFood;
+        _picture = picture;
 
   @override
   MenuFoodTableRowState createState() => MenuFoodTableRowState();
@@ -29,6 +29,8 @@ class MenuFoodTableRowState extends State<MenuFoodTableRow> {
 
   @override
   Widget build(BuildContext context) {
+    MenuViewModel menuViewModel =
+        Provider.of<MenuViewModel>(context, listen: false);
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -73,8 +75,9 @@ class MenuFoodTableRowState extends State<MenuFoodTableRow> {
                     Icons.delete_outlined,
                     color: primaryColor,
                   ),
-                  onTap: () {
-                    this.widget._onDeleteFood(this.widget._id);
+                  onTap: () async {
+                    await menuViewModel.deleteFood(this.widget._id);
+                    await menuViewModel.loadFoods();
                   }),
             ],
           )

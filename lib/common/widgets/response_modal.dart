@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ResponseModal extends StatelessWidget {
   final String type;
-  final String message;
+  final String? message;
   final Function onContinueOrCancel;
 
   ResponseModal(
@@ -43,7 +43,7 @@ class ResponseModal extends StatelessWidget {
             height: 8,
           ),
           Text(
-            this.message,
+            this.message!,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18,

@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sandys_food_express/screens/menu/menu_view_model.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sandys_food_express/screens/Menu/widgets/MenuFoodTableRow.dart';
+import 'package:sandys_food_express/screens/menu/widgets/menu_food_table_row.dart';
 
 import '../../../constants.dart';
 
 class MenuFoodTable extends StatefulWidget {
-  final Future<List<dynamic>> _futureFoods;
-  final Future<void> Function() _onRefresh;
-  final void Function(int) _onDeleteFood;
-
-  MenuFoodTable(
-      {required Future<List<dynamic>> futureFoods,
-      required Future<void> Function() onRefresh,
-      required void Function(int) onDeleteFood})
-      : _futureFoods = futureFoods,
-        _onRefresh = onRefresh,
-        _onDeleteFood = onDeleteFood;
-
   @override
   MenuFoodTableState createState() => MenuFoodTableState();
 }
 
 class MenuFoodTableState extends State<MenuFoodTable> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,12 +40,9 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                 ),
               ),
             ),
-            child: FutureBuilder(
-              future: this.widget._futureFoods,
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<dynamic>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.none ||
-                    snapshot.connectionState == ConnectionState.waiting) {
+            child: Consumer<MenuViewModel>(
+              builder: (context, menuViewModel, child) {
+                if (menuViewModel.isMenuTableLoading) {
                   return Container(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: Row(
@@ -86,7 +78,7 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                       onChanged: (bool? value) {},
                     ),
                     Text(
-                      '${snapshot.data?.length} items',
+                      '${menuViewModel.foods.length} items',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -115,14 +107,9 @@ class MenuFoodTableState extends State<MenuFoodTable> {
               ),
             ),
           ),
-          FutureBuilder(
-            future: this.widget._futureFoods,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-              debugPrint("current state" + snapshot.connectionState.toString());
-              if (snapshot.connectionState == ConnectionState.none ||
-                  snapshot.connectionState == ConnectionState.waiting) {
-                debugPrint("SHIMMER SHIMMER SHIMMERR!");
+          Consumer<MenuViewModel>(
+            builder: (context, menuViewModel, child) {
+              if (menuViewModel.isMenuTableLoading) {
                 return Expanded(
                   child: Shimmer.fromColors(
                     baseColor: accentColor,
@@ -184,17 +171,18 @@ class MenuFoodTableState extends State<MenuFoodTable> {
 
               return Expanded(
                 child: RefreshIndicator(
-                  onRefresh: this.widget._onRefresh,
+                  onRefresh: () async {
+                    await menuViewModel.loadFoods();
+                  },
                   child: ListView.builder(
-                    itemCount: snapshot.data?.length,
+                    itemCount: menuViewModel.foods.length,
                     itemBuilder: (context, index) {
-                      var food = snapshot.data?[index];
+                      var food = menuViewModel.foods[index];
                       return MenuFoodTableRow(
                         id: food['id'],
                         name: food['name'],
                         price: double.parse(food['price']),
                         picture: food['picture'],
-                        onDeleteFood: this.widget._onDeleteFood,
                       );
                     },
                   ),
