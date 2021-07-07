@@ -88,7 +88,6 @@ class _HomeState extends State<Home> {
                               DrawerItem(
                             icon: e['icon'],
                             title: e['title'],
-                            to: e['to'],
                             isActive: e['title'] ==
                                 homeViewModel.currentActiveDrawerItemTitle,
                             onPress: () {

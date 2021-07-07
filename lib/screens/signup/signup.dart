@@ -1,8 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:sandys_food_express/common/widgets/loading_dialog.dart';
+
 import 'package:sandys_food_express/common/widgets/response_modal.dart';
 import 'package:sandys_food_express/common/widgets/progress_hud.dart';
 import 'package:sandys_food_express/constants.dart';

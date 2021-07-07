@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
@@ -10,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:sandys_food_express/common/widgets/loading_dialog.dart';
 import 'package:sandys_food_express/common/widgets/response_modal.dart';
 import 'package:sandys_food_express/screens/menu/menu_view_model.dart';
-import 'package:sandys_food_express/services/secureStorage.dart';
 
 import '../../../constants.dart';
 
@@ -20,7 +18,6 @@ class AddFoodModal extends StatefulWidget {
 }
 
 class AddFoodModalState extends State<AddFoodModal> {
-  late Dio dioClient;
   final _formKey = GlobalKey<FormState>();
   final _nameFieldController = TextEditingController();
   final _priceFieldController = TextEditingController();
@@ -30,7 +27,6 @@ class AddFoodModalState extends State<AddFoodModal> {
   @override
   void initState() {
     super.initState();
-    this.dioClient = Dio();
   }
 
   Future _getImageViaGallery() async {
@@ -39,7 +35,7 @@ class AddFoodModalState extends State<AddFoodModal> {
       if (pickedFile != null) {
         _foodImage = File(pickedFile.path);
       } else {
-        print('No image selected.');
+        debugPrint('No image selected.');
       }
     });
   }
@@ -50,7 +46,7 @@ class AddFoodModalState extends State<AddFoodModal> {
       if (pickedFile != null) {
         _foodImage = File(pickedFile.path);
       } else {
-        print('No image selected.');
+        debugPrint('No image selected.');
       }
     });
   }
@@ -85,43 +81,6 @@ class AddFoodModalState extends State<AddFoodModal> {
         });
   }
 
-  Future<String> _uploadFoodPictureToS3(
-      String filename, String filePath) async {
-    String accessToken = await SecureStorage().readSecureData('accessToken');
-    dioClient.options.headers['Authorization'] = 'Bearer $accessToken';
-
-    var generateUploadUrlHttpResponse = await dioClient.post(
-        '$apiHostEndpoint/menu/foods/upload-url',
-        data: {'filename': filename});
-    var generateUploadUrlHttpResponseBody = generateUploadUrlHttpResponse.data;
-
-    String s3UploadUrl = generateUploadUrlHttpResponseBody['data']['url'];
-    FormData s3UploadFormData = FormData.fromMap({
-      "key": generateUploadUrlHttpResponseBody['data']['fields']['key'],
-      "bucket": generateUploadUrlHttpResponseBody['data']['fields']['bucket'],
-      "X-Amz-Algorithm": generateUploadUrlHttpResponseBody['data']['fields']
-          ['X-Amz-Algorithm'],
-      "X-Amz-Credential": generateUploadUrlHttpResponseBody['data']['fields']
-          ['X-Amz-Credential'],
-      "X-Amz-Date": generateUploadUrlHttpResponseBody['data']['fields']
-          ['X-Amz-Date'],
-      "Policy": generateUploadUrlHttpResponseBody['data']['fields']['Policy'],
-      "X-Amz-Signature": generateUploadUrlHttpResponseBody['data']['fields']
-          ['X-Amz-Signature'],
-      "Content-Type": generateUploadUrlHttpResponseBody['data']['fields']
-          ['Content-Type'],
-      "file": await MultipartFile.fromFile(filePath, filename: filename),
-    });
-
-    dioClient.options.headers['Authorization'] = '';
-    var uploadToS3HttpResponse =
-        await dioClient.post(s3UploadUrl, data: s3UploadFormData);
-    var uploadToS3HttpResponseStatus = uploadToS3HttpResponse
-        .data; // TODO:  check status and throw error if failed?
-
-    return generateUploadUrlHttpResponseBody['data']['fields']['key'];
-  }
-
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       // show loading dialog
@@ -133,42 +92,34 @@ class AddFoodModalState extends State<AddFoodModal> {
         },
       );
 
-      try {
-        debugPrint('I was here before accessing provider');
-        MenuViewModel menuViewModel =
-            Provider.of<MenuViewModel>(context, listen: false);
+      String name = _nameFieldController.text;
+      double price = double.parse(_priceFieldController.text);
+      String foodImagePath = _foodImage?.path;
+      String? foodImageFileName = _foodImage?.path.split('/').last;
 
-        debugPrint('After accessing provider');
-        String foodImagePath = _foodImage?.path;
-        String? foodImageFileName = _foodImage?.path.split('/').last;
-        String name = _nameFieldController.text;
-        double price = double.parse(_priceFieldController.text);
+      MenuViewModel menuViewModel =
+          Provider.of<MenuViewModel>(context, listen: false);
+      await menuViewModel.addFood(
+          name, price, foodImageFileName, foodImagePath);
 
-        var response = await menuViewModel.addFood(
-            name, price, foodImageFileName, foodImagePath);
+      // Pops loading dialog
+      Navigator.of(context).pop();
 
-        // Pops loading dialog
-        Navigator.of(context).pop();
-
-        await showAnimatedDialog(
-          barrierDismissible: true,
-          context: context,
-          builder: (context) {
-            return ResponseModal(
-              type: 'SUCCESS',
-              message: 'You have successfully added food $name',
-              onContinueOrCancel: () {
-                Navigator.of(context).pop(); // pop success add modal
-                Navigator.of(context).pop(); // pop add food modal
-              },
-            );
-          },
-        );
-        await menuViewModel.loadFoods();
-      } on DioError catch (e) {
-        debugPrint(e.toString());
-        Navigator.of(context).pop(); // Pops loading dialog
-      }
+      await showAnimatedDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) {
+          return ResponseModal(
+            type: 'SUCCESS',
+            message: 'You have successfully added food $name',
+            onContinueOrCancel: () {
+              Navigator.of(context).pop(); // pop success add modal
+              Navigator.of(context).pop(); // pop add food modal
+            },
+          );
+        },
+      );
+      await menuViewModel.loadFoods();
     }
   }
 

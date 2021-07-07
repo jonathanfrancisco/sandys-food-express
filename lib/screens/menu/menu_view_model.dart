@@ -4,13 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:sandys_food_express/service_locator.dart';
 import 'package:sandys_food_express/services/menu_service.dart';
 import 'package:sandys_food_express/services/s3_service.dart';
-import 'package:sandys_food_express/services/secure_storage.dart';
 
 enum ViewState { Idle, Busy }
 
 class MenuViewModel extends ChangeNotifier {
   final MenuService _menuService = locator<MenuService>();
-  final SecureStorage _secureStorage = locator<SecureStorage>();
   final S3Service _s3service = locator<S3Service>();
 
   ViewState _state = ViewState.Idle;

@@ -4,19 +4,16 @@ import 'package:sandys_food_express/constants.dart';
 class DrawerItem extends StatelessWidget {
   final Icon _icon;
   final String _title;
-  final String _to;
   final bool _isActive;
   final Function _onPress;
 
   DrawerItem(
       {required Icon icon,
       required String title,
-      required String to,
       bool isActive = false,
       required Function onPress})
       : _title = title,
         _icon = icon,
-        _to = to,
         _isActive = isActive,
         _onPress = onPress;
 

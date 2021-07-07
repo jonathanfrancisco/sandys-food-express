@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:sandys_food_express/constants.dart';
-import 'package:sandys_food_express/common/errors/http_response_error.dart';
 import 'package:sandys_food_express/service_locator.dart';
 import 'package:sandys_food_express/services/secure_storage.dart';
 
@@ -40,8 +37,6 @@ class MenuService {
     String accessToken = await _secureStorage.readSecureData('accessToken');
     _dio.options.headers['Authorization'] = 'Bearer $accessToken';
 
-    var httpResponse =
-        await this._dio.delete('$apiHostEndpoint/menu/foods/$id');
-    var httpResponseBody = httpResponse.data;
+    await this._dio.delete('$apiHostEndpoint/menu/foods/$id');
   }
 }

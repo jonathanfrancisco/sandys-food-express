@@ -41,15 +41,14 @@ class S3Service {
       });
 
       _dio.options.headers['Authorization'] = '';
-      var uploadToS3HttpResponse =
-          await _dio.post(s3UploadUrl, data: s3UploadFormData);
+      await _dio.post(s3UploadUrl, data: s3UploadFormData);
 
       return generateUploadUrlHttpResponseBody['data']['fields']['key'];
     } on DioError catch (e) {
       throw new HttpResponseError(
           errorCode: e.response?.data['error']['code'],
           message: e.response?.data['error']['message']);
-    } on SocketException catch (e) {
+    } on SocketException {
       throw new HttpResponseError(
           errorCode: 'NO_INTERNET_CONNECTION',
           message:

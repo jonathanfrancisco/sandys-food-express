@@ -71,7 +71,7 @@ class SignUpViewModel extends ChangeNotifier {
     setState(ViewState.Busy);
 
     try {
-      var result = await _authService.signUp(name, email, address, password);
+      await _authService.signUp(name, email, address, password);
 
       _successMessage =
           'You have successfully signed-up for an account! You may now login';
