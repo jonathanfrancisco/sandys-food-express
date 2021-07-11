@@ -134,14 +134,9 @@ class SignInState extends State<SignIn> {
 
                                   bool isSignInSuccess =
                                       await signInViewModel.signIn(
-                                          this
-                                              .widget
-                                              ._emailFieldController
-                                              .text,
-                                          this
-                                              .widget
-                                              ._passwordFieldController
-                                              .text);
+                                    this.widget._emailFieldController.text,
+                                    this.widget._passwordFieldController.text,
+                                  );
 
                                   if (isSignInSuccess) {
                                     showAnimatedDialog(

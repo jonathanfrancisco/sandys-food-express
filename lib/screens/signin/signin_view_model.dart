@@ -15,7 +15,7 @@ class SignInViewModel extends ChangeNotifier {
   ViewState _state = ViewState.Idle;
   String? _successMessage;
   String? _errorCode;
-  String? _errorMessage = 'Something went wrong please try again.';
+  String? _errorMessage;
   bool _obscurePasswordField = true;
 
   ViewState get state => _state;

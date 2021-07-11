@@ -17,10 +17,8 @@ void setupLocator() {
   locator.registerLazySingleton<HomeViewModel>(() => HomeViewModel());
   locator.registerLazySingleton<MenuViewModel>(() => MenuViewModel());
 
-  // Utils
-  locator.registerLazySingleton<SecureStorage>(() => SecureStorage());
-
   // Services
+  locator.registerLazySingleton<SecureStorage>(() => SecureStorage());
   locator.registerLazySingleton<AuthService>(() => AuthService());
   locator.registerLazySingleton<MenuService>(() => MenuService());
   locator.registerLazySingleton<S3Service>(() => S3Service());

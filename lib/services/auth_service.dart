@@ -17,19 +17,30 @@ class AuthService {
 
       return httpResponseBody['data'];
     } on DioError catch (e) {
-      throw new HttpResponseError(
-        errorCode: e.response?.data['error']['code'],
-        message: e.response?.data['error']['message'],
-      );
-    } on SocketException {} catch (e) {
-      throw new HttpResponseError(
-          errorCode: 'NO_INTERNET_CONNECTION',
-          message:
-              'No internet connection. Please check your connection and try again later.');
-    }
+      if (e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.connectTimeout) {
+        throw new HttpResponseError(
+            errorCode: 'NO_INTERNET_CONNECTION',
+            message:
+                'No internet connection. Please verify and check your connection and try again later.');
+      }
 
-    throw new HttpResponseError(
-        message: 'Something went wrong please try again.');
+      if (e.type == DioErrorType.response) {
+        throw new HttpResponseError(
+          errorCode: e.response?.data['error']['code'],
+          message: e.response?.data['error']['message'],
+        );
+      }
+
+      if (e.type == DioErrorType.other) {
+        throw new HttpResponseError(
+          errorCode: 'OTHER_ERROR',
+          message: 'Problem connecting to the server. Please try again.',
+        );
+      }
+
+      throw new HttpResponseError();
+    }
   }
 
   Future<dynamic> signUp(
@@ -48,18 +59,29 @@ class AuthService {
 
       return httpResponseBody['data'];
     } on DioError catch (e) {
-      throw new HttpResponseError(
-        errorCode: e.response?.data['error']['code'],
-        message: e.response?.data['error']['message'],
-      );
-    } on SocketException {} catch (e) {
-      throw new HttpResponseError(
-          errorCode: 'NO_INTERNET_CONNECTION',
-          message:
-              'No internet connection. Please check your connection and try again later.');
-    }
+      if (e.type == DioErrorType.receiveTimeout ||
+          e.type == DioErrorType.connectTimeout) {
+        throw new HttpResponseError(
+            errorCode: 'NO_INTERNET_CONNECTION',
+            message:
+                'No internet connection. Please verify and check your connection and try again later.');
+      }
 
-    throw new HttpResponseError(
-        message: 'Something went wrong please try again.');
+      if (e.type == DioErrorType.response) {
+        throw new HttpResponseError(
+          errorCode: e.response?.data['error']['code'],
+          message: e.response?.data['error']['message'],
+        );
+      }
+
+      if (e.type == DioErrorType.other) {
+        throw new HttpResponseError(
+          errorCode: 'OTHER_ERROR',
+          message: 'Problem connecting to the server. Please try again.',
+        );
+      }
+
+      throw new HttpResponseError();
+    }
   }
 }
