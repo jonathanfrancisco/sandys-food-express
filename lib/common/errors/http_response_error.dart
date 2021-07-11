@@ -1,6 +1,6 @@
 class HttpResponseError {
-  final String? errorCode;
-  final String? message;
+  final String errorCode;
+  final String message;
 
   HttpResponseError(
       {errorCode = 'INTERNAL_SERVER_ERROR',

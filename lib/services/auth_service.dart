@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:sandys_food_express/common/errors/handle_dio_errors.dart';
 import 'package:sandys_food_express/constants.dart';
-import 'package:sandys_food_express/common/errors/http_response_error.dart';
 
 class AuthService {
   final _dio = Dio();

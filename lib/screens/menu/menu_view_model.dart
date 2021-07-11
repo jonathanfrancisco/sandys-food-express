@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:sandys_food_express/common/errors/http_response_error.dart';
 import 'package:sandys_food_express/service_locator.dart';
 import 'package:sandys_food_express/services/menu_service.dart';
 import 'package:sandys_food_express/services/s3_service.dart';
@@ -13,6 +14,8 @@ class MenuViewModel extends ChangeNotifier {
 
   ViewState _state = ViewState.Idle;
   bool _isMenuTableLoading = false;
+  String _menuTableErrorCode = '';
+  String _menuTableErrorMessage = '';
   List<dynamic> _foods = [];
 
   MenuViewModel() {
@@ -21,6 +24,8 @@ class MenuViewModel extends ChangeNotifier {
 
   ViewState get state => _state;
   bool get isMenuTableLoading => _isMenuTableLoading;
+  String get menuTableErrorCode => _menuTableErrorCode;
+  String get menuTableErrorMessage => _menuTableErrorMessage;
   List<dynamic> get foods => _foods;
 
   void setState(ViewState viewState) {
@@ -31,8 +36,14 @@ class MenuViewModel extends ChangeNotifier {
   Future<void> loadFoods() async {
     _isMenuTableLoading = true;
     notifyListeners();
-
-    _foods = await _menuService.getFoods();
+    try {
+      print('executing getFoods() method');
+      _foods = await _menuService.getFoods();
+    } on HttpResponseError catch (e) {
+      print('error encountered');
+      _menuTableErrorCode = e.errorCode;
+      _menuTableErrorMessage = e.message;
+    }
 
     _isMenuTableLoading = false;
     notifyListeners();
