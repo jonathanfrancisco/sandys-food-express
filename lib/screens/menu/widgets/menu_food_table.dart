@@ -1,3 +1,4 @@
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sandys_food_express/screens/menu/menu_view_model.dart';
@@ -12,9 +13,23 @@ class MenuFoodTable extends StatefulWidget {
 }
 
 class MenuFoodTableState extends State<MenuFoodTable> {
+  final _searchFieldController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+  }
+
+  _onSearchChanged(String query) {
+    MenuViewModel menuViewModel =
+        Provider.of<MenuViewModel>(context, listen: false);
+    EasyDebounce.debounce(
+        'search-field-debouncer',
+        Duration(milliseconds: 500),
+        () async => {
+              await menuViewModel.loadFoods(query: _searchFieldController.text)
+            } // <-- The target method
+        );
   }
 
   @override
@@ -94,6 +109,7 @@ class MenuFoodTableState extends State<MenuFoodTable> {
               vertical: 10,
             ),
             child: TextField(
+              controller: _searchFieldController,
               decoration: new InputDecoration(
                 suffixIcon: Icon(Icons.search, color: Colors.grey),
                 isDense: true,
@@ -105,6 +121,7 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                 ),
                 hintText: 'Search here',
               ),
+              onChanged: _onSearchChanged,
             ),
           ),
           Consumer<MenuViewModel>(

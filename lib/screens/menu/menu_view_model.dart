@@ -33,14 +33,12 @@ class MenuViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadFoods() async {
+  Future<void> loadFoods({String query = ''}) async {
     _isMenuTableLoading = true;
     notifyListeners();
     try {
-      print('executing getFoods() method');
-      _foods = await _menuService.getFoods();
+      _foods = await _menuService.getFoods(query);
     } on HttpResponseError catch (e) {
-      print('error encountered');
       _menuTableErrorCode = e.errorCode;
       _menuTableErrorMessage = e.message;
     }

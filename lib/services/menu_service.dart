@@ -8,12 +8,15 @@ class MenuService {
   final Dio _dio = Dio();
   final SecureStorage _secureStorage = locator<SecureStorage>();
 
-  Future<List<dynamic>> getFoods() async {
+  Future<List<dynamic>> getFoods(String query) async {
     String accessToken = await SecureStorage().readSecureData('accessToken');
     _dio.options.headers['Authorization'] = 'Bearer $accessToken';
 
     try {
-      var httpResponse = await this._dio.get('$apiHostEndpoint/menu/foods');
+      var httpResponse = await this._dio.get(
+        '$apiHostEndpoint/menu/foods',
+        queryParameters: {'q': query},
+      );
       var httpResponseBody = httpResponse.data;
 
       return httpResponseBody['data'];
