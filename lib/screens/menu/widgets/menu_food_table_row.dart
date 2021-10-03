@@ -8,25 +8,27 @@ class MenuFoodTableRow extends StatefulWidget {
   final int _id;
   final String _name;
   final double _price;
-  final String _picture;
+  final Function _onMenuFoodTableRowSelect;
+  bool _isSelected;
 
   MenuFoodTableRow({
     required int id,
     required String name,
     required double price,
     required String picture,
+    required Function onMenuFoodTableRowSelect,
+    required bool isSelected,
   })   : _id = id,
         _name = name,
         _price = price,
-        _picture = picture;
+        _onMenuFoodTableRowSelect = onMenuFoodTableRowSelect,
+        _isSelected = isSelected;
 
   @override
   MenuFoodTableRowState createState() => MenuFoodTableRowState();
 }
 
 class MenuFoodTableRowState extends State<MenuFoodTableRow> {
-  bool isSelected = false;
-
   @override
   Widget build(BuildContext context) {
     MenuViewModel menuViewModel =
@@ -44,11 +46,9 @@ class MenuFoodTableRowState extends State<MenuFoodTableRow> {
         children: [
           Checkbox(
             activeColor: primaryColor,
-            value: this.isSelected,
+            value: this.widget._isSelected,
             onChanged: (bool? value) {
-              setState(() {
-                this.isSelected = !this.isSelected;
-              });
+              this.widget._onMenuFoodTableRowSelect(this.widget._id);
             },
           ),
           Text(
@@ -71,14 +71,15 @@ class MenuFoodTableRowState extends State<MenuFoodTableRow> {
                 color: primaryColor,
               ),
               GestureDetector(
-                  child: Icon(
-                    Icons.delete_outlined,
-                    color: primaryColor,
-                  ),
-                  onTap: () async {
-                    await menuViewModel.deleteFood(this.widget._id);
-                    await menuViewModel.loadFoods();
-                  }),
+                child: Icon(
+                  Icons.delete_outlined,
+                  color: primaryColor,
+                ),
+                onTap: () async {
+                  await menuViewModel.deleteFood(this.widget._id);
+                  await menuViewModel.loadFoods();
+                },
+              ),
             ],
           )
         ],

@@ -58,4 +58,12 @@ class MenuViewModel extends ChangeNotifier {
   Future<void> deleteFood(int id) async {
     await _menuService.deleteFood(id);
   }
+
+  Future<void> createScheduledMenu(
+    List<int> selectedFoodIds,
+    DateTime scheduledDateTime,
+  ) async {
+    print("i was here 1");
+    await _menuService.createScheduledMenu(selectedFoodIds, scheduledDateTime);
+  }
 }

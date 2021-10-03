@@ -55,4 +55,27 @@ class MenuService {
       handleDioErrors(e);
     }
   }
+
+  Future<void> createScheduledMenu(
+    List<int> selectedFoodIds,
+    DateTime scheduledDateTime,
+  ) async {
+    String accessToken = await _secureStorage.readSecureData('accessToken');
+    _dio.options.headers['Authorization'] = 'Bearer $accessToken';
+
+    try {
+      var response = await this._dio.post(
+        '$apiHostEndpoint/menu',
+        data: {
+          'foodIds': selectedFoodIds,
+          'scheduledAt': scheduledDateTime.toString(),
+        },
+      );
+
+      print('response: ' + response.toString());
+    } on DioError catch (e) {
+      print(e.toString());
+      handleDioErrors(e);
+    }
+  }
 }

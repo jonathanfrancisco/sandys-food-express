@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:intl/intl.dart';
+
 import 'package:provider/provider.dart';
+import 'package:sandys_food_express/common/widgets/loading_dialog.dart';
+import 'package:sandys_food_express/common/widgets/response_modal.dart';
 import 'package:sandys_food_express/screens/menu/menu_view_model.dart';
+import 'package:sandys_food_express/screens/menu/screens/view_menu/view_menu.dart';
 
 import 'package:sandys_food_express/screens/menu/widgets/menu_food_table_info.dart';
 import 'package:sandys_food_express/screens/menu/widgets/menu_food_table.dart';
@@ -9,12 +14,68 @@ import 'package:sandys_food_express/screens/menu/widgets/add_food_modal.dart';
 
 import 'package:sandys_food_express/constants.dart';
 
-class Menu extends StatelessWidget {
+class Menu extends StatefulWidget {
   static final String routeName = '/menu';
+
+  MenuState createState() => MenuState();
+}
+
+class MenuState extends State<Menu> {
+  List<int> _selectedFoodIds = [];
+  DateTime _scheduledDate = DateTime.now();
+  TimeOfDay _scheduledTime = TimeOfDay.now();
+  //  hh:mm:a
+  _selectScheduledDate(BuildContext context) async {
+    final selectedScheduledDate = await showDatePicker(
+      context: context,
+      initialDate: _scheduledDate,
+      firstDate: _scheduledDate,
+      lastDate: DateTime(2100),
+    );
+
+    setState(() => _scheduledDate = selectedScheduledDate!);
+  }
+
+  _selectScheduleTime(BuildContext context) async {
+    final selectedScheduledTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    setState(() => _scheduledTime = selectedScheduledTime!);
+  }
+
+  _onMenuFoodTableRowSelectToggle(int foodId) {
+    setState(() {
+      if (_selectedFoodIds.indexOf(foodId) == -1) {
+        _selectedFoodIds.add(foodId);
+      } else {
+        _selectedFoodIds.remove(foodId);
+      }
+    });
+  }
+
+  _onMenuFoodTableRowSelectAllToggle(List<int> availableFoodIds) {
+    if (_selectedFoodIds.length == availableFoodIds.length) {
+      return setState(() {
+        _selectedFoodIds.clear();
+      });
+    }
+
+    return setState(() {
+      availableFoodIds.forEach((foodId) {
+        if (_selectedFoodIds.indexOf(foodId) == -1) {
+          _selectedFoodIds.add(foodId);
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MenuViewModel menuViewModel =
         Provider.of<MenuViewModel>(context, listen: false);
+
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFFF9F9F9),
@@ -36,7 +97,10 @@ class Menu extends StatelessWidget {
                     primary: accentColor,
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ViewMenu()));
+                  },
                   child: Text(
                     'View Menu',
                     style: TextStyle(
@@ -71,9 +135,145 @@ class Menu extends StatelessWidget {
             ),
             SizedBox(height: 8),
             MenuFoodTableInfo(),
-            MenuFoodTable(),
+            MenuFoodTable(
+              selectedFoodIds: _selectedFoodIds,
+              onMenuFoodTableRowSelectAllToggle:
+                  _onMenuFoodTableRowSelectAllToggle,
+              onMenuFoodTableRowSelectToggle: _onMenuFoodTableRowSelectToggle,
+            ),
             SizedBox(
-              height: 12,
+              height: 20,
+            ),
+            Text(
+              'Date / Time',
+              style: TextStyle(fontSize: 18),
+            ),
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () => _selectScheduledDate(context),
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: borderColor, width: 1),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        DateFormat('yyyy-MM-dd').format(_scheduledDate),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: subTextColor,
+                        ),
+                      ),
+                      SizedBox(width: 14),
+                      Icon(
+                        Icons.event,
+                        size: 16,
+                        color: subTextColor,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 10),
+                TextButton(
+                  onPressed: () => _selectScheduleTime(context),
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: borderColor, width: 1),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        _scheduledTime.format(context),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: subTextColor,
+                        ),
+                      ),
+                      SizedBox(width: 14),
+                      Icon(
+                        Icons.av_timer,
+                        size: 16,
+                        color: subTextColor,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: primaryColor,
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+              ),
+              child: Text(
+                'Add to Menu',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: accentColor,
+                ),
+              ),
+              onPressed: () async {
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return LoadingDialog();
+                  },
+                );
+
+                if (_selectedFoodIds.isEmpty) {
+                  await showAnimatedDialog(
+                    barrierDismissible: true,
+                    context: context,
+                    builder: (context) {
+                      return ResponseModal(
+                        type: 'ERROR',
+                        message: 'Please select atleast one food to scheduled',
+                        onContinueOrCancel: () {
+                          Navigator.of(context).pop(); // pop success add modal
+                          Navigator.of(context).pop(); // pop add food modal
+                        },
+                      );
+                    },
+                  );
+                  return;
+                }
+
+                DateTime completeScheduledDateTime = DateTime(
+                  _scheduledDate.year,
+                  _scheduledDate.month,
+                  _scheduledDate.day,
+                  _scheduledDate.hour,
+                  _scheduledDate.minute,
+                );
+
+                await menuViewModel.createScheduledMenu(
+                  _selectedFoodIds,
+                  completeScheduledDateTime,
+                );
+
+                await showAnimatedDialog(
+                  barrierDismissible: true,
+                  context: context,
+                  builder: (context) {
+                    return ResponseModal(
+                      type: 'SUCCESS',
+                      message: 'You have successfully created a scheduled menu',
+                      onContinueOrCancel: () {
+                        Navigator.of(context).pop(); // pop success add modal
+                        Navigator.of(context).pop(); // pop add food modal
+                      },
+                    );
+                  },
+                );
+                await menuViewModel.loadFoods();
+              },
             ),
           ],
         ),

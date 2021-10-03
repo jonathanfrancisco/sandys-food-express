@@ -7,6 +7,7 @@ import 'package:sandys_food_express/screens/home/widgets/app_bar_title.dart';
 import 'package:sandys_food_express/screens/home/widgets/drawer_item.dart';
 import 'package:sandys_food_express/screens/menu/menu.dart';
 import 'package:sandys_food_express/screens/menu/menu_view_model.dart';
+import 'package:sandys_food_express/screens/orders/orders.dart';
 import 'package:sandys_food_express/screens/ordersqueue/ordersqueue.dart';
 import 'package:sandys_food_express/service_locator.dart';
 import '../../constants.dart';
@@ -27,8 +28,11 @@ class _HomeState extends State<Home> {
       page = OrdersQueue();
     }
 
+    if (settings.name == Orders.routeName) {
+      page = Orders();
+    }
+
     if (settings.name == Menu.routeName) {
-      // page = Menu();
       page = ChangeNotifierProvider<MenuViewModel>(
         create: (context) => locator.get<MenuViewModel>(),
         child: Menu(),
@@ -53,8 +57,28 @@ class _HomeState extends State<Home> {
       },
       {
         "icon": Icon(Icons.add),
+        "title": "ORDERS",
+        "to": Orders.routeName,
+      },
+      {
+        "icon": Icon(Icons.add),
         "title": "MENU",
         "to": Menu.routeName,
+      },
+      {
+        "icon": Icon(Icons.add),
+        "title": "DRAFTS",
+        "to": Orders.routeName,
+      },
+      {
+        "icon": Icon(Icons.add),
+        "title": "GROCERY LIST",
+        "to": Orders.routeName,
+      },
+      {
+        "icon": Icon(Icons.add),
+        "title": "REPORTS ",
+        "to": Orders.routeName,
       }
     ];
 
@@ -63,6 +87,7 @@ class _HomeState extends State<Home> {
       child: WillPopScope(
         onWillPop: () async {
           // do nothing
+          debugPrint('I was here');
           return false;
         },
         child: ProgressHUD(
@@ -73,6 +98,7 @@ class _HomeState extends State<Home> {
                 iconTheme: IconThemeData(color: Colors.black),
                 backgroundColor: Colors.white,
                 title: AppBarTitle(),
+                elevation: 0,
               ),
               drawer: Drawer(
                 child: Container(

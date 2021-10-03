@@ -8,8 +8,20 @@ import 'package:sandys_food_express/screens/menu/widgets/menu_food_table_row.dar
 import '../../../constants.dart';
 
 class MenuFoodTable extends StatefulWidget {
+  final List<int> _selectedFoodIds;
+  final Function _onMenuFoodTableRowSelectAllTogle;
+  final Function _onMenuFoodTableRowSelectToggle;
+
   @override
   MenuFoodTableState createState() => MenuFoodTableState();
+
+  MenuFoodTable({
+    required List<int> selectedFoodIds,
+    required Function onMenuFoodTableRowSelectAllToggle,
+    required Function onMenuFoodTableRowSelectToggle,
+  })   : _selectedFoodIds = selectedFoodIds,
+        _onMenuFoodTableRowSelectAllTogle = onMenuFoodTableRowSelectAllToggle,
+        _onMenuFoodTableRowSelectToggle = onMenuFoodTableRowSelectToggle;
 }
 
 class MenuFoodTableState extends State<MenuFoodTable> {
@@ -24,12 +36,12 @@ class MenuFoodTableState extends State<MenuFoodTable> {
     MenuViewModel menuViewModel =
         Provider.of<MenuViewModel>(context, listen: false);
     EasyDebounce.debounce(
-        'search-field-debouncer',
-        Duration(milliseconds: 500),
-        () async => {
-              await menuViewModel.loadFoods(query: _searchFieldController.text)
-            } // <-- The target method
-        );
+      'search-field-debouncer',
+      Duration(milliseconds: 500),
+      () async => await menuViewModel.loadFoods(
+        query: _searchFieldController.text,
+      ),
+    );
   }
 
   @override
@@ -89,8 +101,18 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Checkbox(
-                      value: false,
-                      onChanged: (bool? value) {},
+                      activeColor: primaryColor,
+                      value: this.widget._selectedFoodIds.length ==
+                          menuViewModel.foods.length,
+                      onChanged: (bool? value) {
+                        List<int> availableFoodIds =
+                            menuViewModel.foods.map((food) {
+                          return food['id'] as int;
+                        }).toList();
+                        this.widget._onMenuFoodTableRowSelectAllTogle(
+                              availableFoodIds,
+                            );
+                      },
                     ),
                     Text(
                       '${menuViewModel.foods.length} items',
@@ -185,7 +207,7 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                   ),
                 );
               }
-
+              // not loading anymore
               return Expanded(
                 child: RefreshIndicator(
                   onRefresh: () async {
@@ -195,11 +217,17 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                     itemCount: menuViewModel.foods.length,
                     itemBuilder: (context, index) {
                       var food = menuViewModel.foods[index];
+                      bool isSelected =
+                          this.widget._selectedFoodIds.indexOf(food['id']) > -1;
+
                       return MenuFoodTableRow(
                         id: food['id'],
                         name: food['name'],
                         price: double.parse(food['price']),
                         picture: food['picture'],
+                        onMenuFoodTableRowSelect:
+                            this.widget._onMenuFoodTableRowSelectToggle,
+                        isSelected: isSelected,
                       );
                     },
                   ),
