@@ -1,12 +1,12 @@
 import 'package:get_it/get_it.dart';
-import 'package:sandys_food_express/screens/home/home_view_model.dart';
-import 'package:sandys_food_express/screens/menu/menu_view_model.dart';
-import 'package:sandys_food_express/screens/signin/signin_view_model.dart';
-import 'package:sandys_food_express/screens/signup/signup_view_model.dart';
-import 'package:sandys_food_express/services/auth_service.dart';
-import 'package:sandys_food_express/services/menu_service.dart';
-import 'package:sandys_food_express/services/s3_service.dart';
-import 'package:sandys_food_express/services/secure_storage.dart';
+import 'package:sandys_food_express/screens/home/home-view-model.dart';
+import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
+import 'package:sandys_food_express/screens/signin/signin-view-model.dart';
+import 'package:sandys_food_express/screens/signup/signup-view-model.dart';
+import 'package:sandys_food_express/services/auth-service.dart';
+import 'package:sandys_food_express/services/menu-service.dart';
+import 'package:sandys_food_express/services/s3-service.dart';
+import 'package:sandys_food_express/services/secure-storage.dart';
 
 GetIt locator = GetIt.instance;
 

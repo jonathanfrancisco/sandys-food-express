@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:sandys_food_express/common/errors/handle_dio_errors.dart';
+import 'package:sandys_food_express/common/errors/handle-dio-errors.dart';
 import 'package:sandys_food_express/constants.dart';
-import 'package:sandys_food_express/service_locator.dart';
-import 'package:sandys_food_express/services/secure_storage.dart';
+import 'package:sandys_food_express/service-locator.dart';
+import 'package:sandys_food_express/services/secure-storage.dart';
 
 class MenuService {
   final Dio _dio = Dio();

@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 
-import 'package:sandys_food_express/common/widgets/gradient_background.dart';
-import 'package:sandys_food_express/common/widgets/response_modal.dart';
-import 'package:sandys_food_express/common/widgets/screen_title.dart';
-import 'package:sandys_food_express/common/widgets/app_header.dart';
-import 'package:sandys_food_express/common/widgets/app_footer.dart';
-import 'package:sandys_food_express/common/widgets/progress_hud.dart';
+import 'package:sandys_food_express/common/widgets/gradient-background.dart';
+import 'package:sandys_food_express/common/widgets/response-modal.dart';
+import 'package:sandys_food_express/common/widgets/screen-title.dart';
+import 'package:sandys_food_express/common/widgets/app-header.dart';
+import 'package:sandys_food_express/common/widgets/app-footer.dart';
+import 'package:sandys_food_express/common/widgets/progress-hud.dart';
 import 'package:sandys_food_express/constants.dart';
 
-import 'package:sandys_food_express/screens/signin/signin_view_model.dart';
+import 'package:sandys_food_express/screens/signin/signin-view-model.dart';
 
 import 'package:sandys_food_express/screens/signup/signup.dart';
-import 'package:sandys_food_express/screens/signin/google_signin_btn_view.dart';
-import 'package:sandys_food_express/service_locator.dart';
+import 'package:sandys_food_express/screens/signin/google-signin-btn-view.dart';
+import 'package:sandys_food_express/service-locator.dart';
 
 class SignIn extends StatefulWidget {
   static final routeName = '/sign-in';

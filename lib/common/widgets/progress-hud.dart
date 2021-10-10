@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'loading_dialog.dart';
+import 'loading-dialog.dart';
 
 class ProgressHUD extends StatelessWidget {
   final Widget _child;

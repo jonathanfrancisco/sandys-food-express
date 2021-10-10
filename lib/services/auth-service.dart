@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:sandys_food_express/common/errors/handle_dio_errors.dart';
+import 'package:sandys_food_express/common/errors/handle-dio-errors.dart';
 import 'package:sandys_food_express/constants.dart';
 
 class AuthService {

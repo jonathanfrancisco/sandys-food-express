@@ -1,9 +1,9 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sandys_food_express/screens/menu/menu_view_model.dart';
+import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sandys_food_express/screens/menu/widgets/menu_food_table_row.dart';
+import 'package:sandys_food_express/screens/menu/widgets/menu-food-table-row.dart';
 
 import '../../../constants.dart';
 

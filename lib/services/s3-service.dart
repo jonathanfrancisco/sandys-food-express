@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:sandys_food_express/constants.dart';
-import 'package:sandys_food_express/common/errors/http_response_error.dart';
-import 'package:sandys_food_express/service_locator.dart';
-import 'package:sandys_food_express/services/secure_storage.dart';
+import 'package:sandys_food_express/common/errors/http-response-error.dart';
+import 'package:sandys_food_express/service-locator.dart';
+import 'package:sandys_food_express/services/secure-storage.dart';
 
 class S3Service {
   final _dio = Dio();

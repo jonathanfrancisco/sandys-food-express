@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:sandys_food_express/service_locator.dart';
+import 'package:sandys_food_express/service-locator.dart';
 
-import 'package:sandys_food_express/common/errors/http_response_error.dart';
+import 'package:sandys_food_express/common/errors/http-response-error.dart';
 
-import 'package:sandys_food_express/services/auth_service.dart';
-import 'package:sandys_food_express/services/secure_storage.dart';
+import 'package:sandys_food_express/services/auth-service.dart';
+import 'package:sandys_food_express/services/secure-storage.dart';
 
 enum ViewState { Idle, Busy }
 

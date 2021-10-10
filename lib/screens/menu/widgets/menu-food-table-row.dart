@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sandys_food_express/constants.dart';
 
-import '../menu_view_model.dart';
+import '../menu-view-model.dart';
 
 class MenuFoodTableRow extends StatefulWidget {
   final int _id;

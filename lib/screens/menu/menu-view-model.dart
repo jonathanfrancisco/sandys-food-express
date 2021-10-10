@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:sandys_food_express/common/errors/http_response_error.dart';
-import 'package:sandys_food_express/service_locator.dart';
-import 'package:sandys_food_express/services/menu_service.dart';
-import 'package:sandys_food_express/services/s3_service.dart';
+import 'package:sandys_food_express/common/errors/http-response-error.dart';
+import 'package:sandys_food_express/service-locator.dart';
+import 'package:sandys_food_express/services/menu-service.dart';
+import 'package:sandys_food_express/services/s3-service.dart';
 
 enum ViewState { Idle, Busy }
 

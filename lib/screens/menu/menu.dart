@@ -3,14 +3,14 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
-import 'package:sandys_food_express/common/widgets/loading_dialog.dart';
-import 'package:sandys_food_express/common/widgets/response_modal.dart';
-import 'package:sandys_food_express/screens/menu/menu_view_model.dart';
-import 'package:sandys_food_express/screens/menu/screens/view_menu/view_menu.dart';
+import 'package:sandys_food_express/common/widgets/loading-dialog.dart';
+import 'package:sandys_food_express/common/widgets/response-modal.dart';
+import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
+import 'package:sandys_food_express/screens/menu/screens/view_menu/view-menu.dart';
 
-import 'package:sandys_food_express/screens/menu/widgets/menu_food_table_info.dart';
-import 'package:sandys_food_express/screens/menu/widgets/menu_food_table.dart';
-import 'package:sandys_food_express/screens/menu/widgets/add_food_modal.dart';
+import 'package:sandys_food_express/screens/menu/widgets/menu-food-table-info.dart';
+import 'package:sandys_food_express/screens/menu/widgets/menu-food-table.dart';
+import 'package:sandys_food_express/screens/menu/widgets/add-food-modal.dart';
 
 import 'package:sandys_food_express/constants.dart';
 

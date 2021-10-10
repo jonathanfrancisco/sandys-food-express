@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:sandys_food_express/common/errors/http_response_error.dart';
+import 'package:sandys_food_express/common/errors/http-response-error.dart';
 
 handleDioErrors(DioError e) {
   if (e.type == DioErrorType.receiveTimeout ||

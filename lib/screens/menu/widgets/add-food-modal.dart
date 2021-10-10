@@ -6,9 +6,9 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:sandys_food_express/common/widgets/loading_dialog.dart';
-import 'package:sandys_food_express/common/widgets/response_modal.dart';
-import 'package:sandys_food_express/screens/menu/menu_view_model.dart';
+import 'package:sandys_food_express/common/widgets/loading-dialog.dart';
+import 'package:sandys_food_express/common/widgets/response-modal.dart';
+import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
 
 import '../../../constants.dart';
 
