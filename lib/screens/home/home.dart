@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sandys_food_express/common/widgets/progress-hud.dart';
 import 'package:sandys_food_express/screens/home/home-view-model.dart';
-import 'package:sandys_food_express/screens/home/widgets/app_bar_drawer_header.dart';
-import 'package:sandys_food_express/screens/home/widgets/app_bar_title.dart';
-import 'package:sandys_food_express/screens/home/widgets/drawer_item.dart';
+import 'package:sandys_food_express/screens/home/widgets/app-bar-drawer-header.dart';
+import 'package:sandys_food_express/screens/home/widgets/app-bar-title.dart';
+import 'package:sandys_food_express/screens/home/widgets/drawer-item.dart';
 import 'package:sandys_food_express/screens/menu/menu.dart';
 import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
 import 'package:sandys_food_express/screens/orders/orders.dart';
@@ -23,7 +23,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Route _onGenerateRoute(RouteSettings settings) {
     late Widget page;
-
     if (settings.name == OrdersQueue.routeName) {
       page = OrdersQueue();
     }
