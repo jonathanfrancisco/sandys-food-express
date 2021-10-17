@@ -24,7 +24,7 @@ class MenuState extends State<Menu> {
   List<int> _selectedFoodIds = [];
   DateTime _scheduledDate = DateTime.now();
   TimeOfDay _scheduledTime = TimeOfDay.now();
-  //  hh:mm:a
+
   _selectScheduledDate(BuildContext context) async {
     final selectedScheduledDate = await showDatePicker(
       context: context,
@@ -140,6 +140,7 @@ class MenuState extends State<Menu> {
               onMenuFoodTableRowSelectAllToggle:
                   _onMenuFoodTableRowSelectAllToggle,
               onMenuFoodTableRowSelectToggle: _onMenuFoodTableRowSelectToggle,
+              hasActions: true,
             ),
             SizedBox(
               height: 20,

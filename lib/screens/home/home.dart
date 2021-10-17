@@ -28,7 +28,10 @@ class _HomeState extends State<Home> {
     }
 
     if (settings.name == Orders.routeName) {
-      page = Orders();
+      page = ChangeNotifierProvider(
+        create: (context) => locator.get<MenuViewModel>(),
+        child: Orders(),
+      );
     }
 
     if (settings.name == Menu.routeName) {
@@ -64,21 +67,21 @@ class _HomeState extends State<Home> {
         "title": "MENU",
         "to": Menu.routeName,
       },
-      {
-        "icon": Icon(Icons.add),
-        "title": "DRAFTS",
-        "to": Orders.routeName,
-      },
-      {
-        "icon": Icon(Icons.add),
-        "title": "GROCERY LIST",
-        "to": Orders.routeName,
-      },
-      {
-        "icon": Icon(Icons.add),
-        "title": "REPORTS ",
-        "to": Orders.routeName,
-      }
+      // {
+      //   "icon": Icon(Icons.add),
+      //   "title": "DRAFTS",
+      //   "to": Orders.routeName,
+      // },
+      // {
+      //   "icon": Icon(Icons.add),
+      //   "title": "GROCERY LIST",
+      //   "to": Orders.routeName,
+      // },
+      // {
+      //   "icon": Icon(Icons.add),
+      //   "title": "REPORTS ",
+      //   "to": Orders.routeName,
+      // }
     ];
 
     return ChangeNotifierProvider<HomeViewModel>(

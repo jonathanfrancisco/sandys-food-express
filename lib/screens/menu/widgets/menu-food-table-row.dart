@@ -9,6 +9,7 @@ class MenuFoodTableRow extends StatefulWidget {
   final String _name;
   final double _price;
   final Function _onMenuFoodTableRowSelect;
+  final bool _hasActions;
   bool _isSelected;
 
   MenuFoodTableRow({
@@ -17,11 +18,13 @@ class MenuFoodTableRow extends StatefulWidget {
     required double price,
     required String picture,
     required Function onMenuFoodTableRowSelect,
+    bool hasActions = false,
     required bool isSelected,
-  })   : _id = id,
+  })  : _id = id,
         _name = name,
         _price = price,
         _onMenuFoodTableRowSelect = onMenuFoodTableRowSelect,
+        _hasActions = hasActions,
         _isSelected = isSelected;
 
   @override
@@ -64,24 +67,25 @@ class MenuFoodTableRowState extends State<MenuFoodTableRow> {
               color: primaryColor,
             ),
           ),
-          Row(
-            children: [
-              Icon(
-                Icons.edit_outlined,
-                color: primaryColor,
-              ),
-              GestureDetector(
-                child: Icon(
-                  Icons.delete_outlined,
+          if (this.widget._hasActions)
+            Row(
+              children: [
+                Icon(
+                  Icons.edit_outlined,
                   color: primaryColor,
                 ),
-                onTap: () async {
-                  await menuViewModel.deleteFood(this.widget._id);
-                  await menuViewModel.loadFoods();
-                },
-              ),
-            ],
-          )
+                GestureDetector(
+                  child: Icon(
+                    Icons.delete_outlined,
+                    color: primaryColor,
+                  ),
+                  onTap: () async {
+                    await menuViewModel.deleteFood(this.widget._id);
+                    await menuViewModel.loadFoods();
+                  },
+                ),
+              ],
+            )
         ],
       ),
     );

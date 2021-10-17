@@ -11,6 +11,7 @@ class MenuFoodTable extends StatefulWidget {
   final List<int> _selectedFoodIds;
   final Function _onMenuFoodTableRowSelectAllTogle;
   final Function _onMenuFoodTableRowSelectToggle;
+  final bool _hasActions;
 
   @override
   MenuFoodTableState createState() => MenuFoodTableState();
@@ -19,9 +20,11 @@ class MenuFoodTable extends StatefulWidget {
     required List<int> selectedFoodIds,
     required Function onMenuFoodTableRowSelectAllToggle,
     required Function onMenuFoodTableRowSelectToggle,
-  })   : _selectedFoodIds = selectedFoodIds,
+    bool hasActions = false,
+  })  : _selectedFoodIds = selectedFoodIds,
         _onMenuFoodTableRowSelectAllTogle = onMenuFoodTableRowSelectAllToggle,
-        _onMenuFoodTableRowSelectToggle = onMenuFoodTableRowSelectToggle;
+        _onMenuFoodTableRowSelectToggle = onMenuFoodTableRowSelectToggle,
+        _hasActions = hasActions;
 }
 
 class MenuFoodTableState extends State<MenuFoodTable> {
@@ -227,6 +230,7 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                         picture: food['picture'],
                         onMenuFoodTableRowSelect:
                             this.widget._onMenuFoodTableRowSelectToggle,
+                        hasActions: this.widget._hasActions,
                         isSelected: isSelected,
                       );
                     },
