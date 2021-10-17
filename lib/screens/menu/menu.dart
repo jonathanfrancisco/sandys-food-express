@@ -104,7 +104,6 @@ class MenuState extends State<Menu> {
                   child: Text(
                     'View Menu',
                     style: TextStyle(
-                      fontSize: 16,
                       color: primaryColor,
                     ),
                   ),
@@ -147,7 +146,6 @@ class MenuState extends State<Menu> {
             ),
             Text(
               'Date / Time',
-              style: TextStyle(fontSize: 18),
             ),
             Row(
               children: [
@@ -163,7 +161,6 @@ class MenuState extends State<Menu> {
                       Text(
                         DateFormat('yyyy-MM-dd').format(_scheduledDate),
                         style: TextStyle(
-                          fontSize: 18,
                           color: subTextColor,
                         ),
                       ),
@@ -189,7 +186,6 @@ class MenuState extends State<Menu> {
                       Text(
                         _scheduledTime.format(context),
                         style: TextStyle(
-                          fontSize: 18,
                           color: subTextColor,
                         ),
                       ),

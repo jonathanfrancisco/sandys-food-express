@@ -56,14 +56,11 @@ class MenuFoodTableRowState extends State<MenuFoodTableRow> {
           ),
           Text(
             this.widget._name,
-            style: TextStyle(
-              fontSize: 16,
-            ),
+            style: TextStyle(),
           ),
           Text(
             this.widget._price.toString(),
             style: TextStyle(
-              fontSize: 16,
               color: primaryColor,
             ),
           ),

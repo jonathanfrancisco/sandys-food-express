@@ -119,9 +119,7 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                     ),
                     Text(
                       '${menuViewModel.foods.length} items',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
+                      style: TextStyle(),
                     )
                   ],
                 );
@@ -134,6 +132,9 @@ class MenuFoodTableState extends State<MenuFoodTable> {
               vertical: 10,
             ),
             child: TextField(
+              style: TextStyle(
+                fontSize: 14,
+              ),
               controller: _searchFieldController,
               decoration: new InputDecoration(
                 suffixIcon: Icon(Icons.search, color: Colors.grey),
