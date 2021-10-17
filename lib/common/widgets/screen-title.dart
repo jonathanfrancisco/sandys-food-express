@@ -33,9 +33,7 @@ class ScreenTitle extends StatelessWidget {
           children: [
             Text(
               subtitle,
-              style: TextStyle(
-                fontSize: 14,
-              ),
+              style: TextStyle(),
             ),
             GestureDetector(
               onTap: () => subtitleActionOnTap(context),
@@ -43,7 +41,6 @@ class ScreenTitle extends StatelessWidget {
                 subtitleAction,
                 style: TextStyle(
                   color: primaryColor,
-                  fontSize: 14,
                 ),
               ),
             ),

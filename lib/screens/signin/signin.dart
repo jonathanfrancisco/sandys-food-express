@@ -71,7 +71,7 @@ class SignInState extends State<SignIn> {
                                 controller: this.widget._emailFieldController,
                                 validator: (value) =>
                                     signInViewModel.isValidEmail(value),
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(),
                                 decoration: InputDecoration(
                                   isDense: true,
                                   fillColor: Colors.white,
@@ -92,7 +92,7 @@ class SignInState extends State<SignIn> {
                                     signInViewModel.isValidPasssword(value),
                                 obscureText:
                                     signInViewModel.obscurePasswordField,
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(),
                                 decoration: InputDecoration(
                                   isDense: true,
                                   fillColor: Colors.white,

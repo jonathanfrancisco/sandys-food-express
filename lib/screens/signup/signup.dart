@@ -70,7 +70,7 @@ class SignUpState extends State<SignUp> {
                             children: <Widget>[
                               TextFormField(
                                 controller: this.widget._nameFieldController,
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(),
                                 decoration: InputDecoration(
                                   isDense: true,
                                   fillColor: Colors.white,
@@ -88,7 +88,7 @@ class SignUpState extends State<SignUp> {
                               SizedBox(height: 12),
                               TextFormField(
                                 controller: this.widget._emailFieldController,
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(),
                                 decoration: InputDecoration(
                                   isDense: true,
                                   fillColor: Colors.white,
@@ -106,7 +106,7 @@ class SignUpState extends State<SignUp> {
                               SizedBox(height: 12),
                               TextFormField(
                                 controller: this.widget._addressFieldController,
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(),
                                 decoration: InputDecoration(
                                   isDense: true,
                                   fillColor: Colors.white,
@@ -127,7 +127,7 @@ class SignUpState extends State<SignUp> {
                                     this.widget._passwordFieldController,
                                 obscureText:
                                     signUpViewModel.obscurePasswordField,
-                                style: TextStyle(fontSize: 14),
+                                style: TextStyle(),
                                 decoration: InputDecoration(
                                   isDense: true,
                                   fillColor: Colors.white,
@@ -179,7 +179,7 @@ class SignUpState extends State<SignUp> {
                                   debugPrint("Hello World!");
                                   debugPrint("Hello World!");
                                   debugPrint("Hello World!");
-                                  
+
                                   if (!this
                                       .widget
                                       ._formKey
@@ -187,7 +187,7 @@ class SignUpState extends State<SignUp> {
                                       .validate()) {
                                     return;
                                   }
-                                  
+
                                   bool isSignUpSuccess =
                                       await signUpViewModel.signUp(
                                     this.widget._nameFieldController.text,

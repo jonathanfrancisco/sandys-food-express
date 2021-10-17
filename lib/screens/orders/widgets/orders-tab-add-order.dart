@@ -124,16 +124,13 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                                 '*',
                                 style: TextStyle(
                                   color: Colors.red,
-                                  fontSize: 14,
                                 ),
                               )
                             ],
                           ),
                           SizedBox(height: 8),
                           TextFormField(
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
+                            style: TextStyle(),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Customer name is required';
@@ -166,7 +163,6 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                                 '*',
                                 style: TextStyle(
                                   color: Colors.red,
-                                  fontSize: 14,
                                 ),
                               )
                             ],
@@ -187,7 +183,6 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                                       DateFormat('yyyy-MM-dd')
                                           .format(_scheduledDate),
                                       style: TextStyle(
-                                        fontSize: 14,
                                         color: subTextColor,
                                       ),
                                     ),
@@ -214,7 +209,6 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                                     Text(
                                       _scheduledTime.format(context),
                                       style: TextStyle(
-                                        fontSize: 14,
                                         color: subTextColor,
                                       ),
                                     ),
@@ -239,16 +233,13 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                                 '*',
                                 style: TextStyle(
                                   color: Colors.red,
-                                  fontSize: 14,
                                 ),
                               )
                             ],
                           ),
                           SizedBox(height: 8),
                           TextFormField(
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
+                            style: TextStyle(),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Delivery Address is required';

@@ -22,7 +22,6 @@ class ScheduledFoodMenuListState extends State<ScheduledFoodMenuList> {
                 'August 1, 2020 3:00pm',
                 style: TextStyle(
                   color: primaryColor,
-                  fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -39,7 +38,6 @@ class ScheduledFoodMenuListState extends State<ScheduledFoodMenuList> {
                       'Edit',
                       style: TextStyle(
                         color: primaryColor,
-                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -50,15 +48,12 @@ class ScheduledFoodMenuListState extends State<ScheduledFoodMenuList> {
                   children: [
                     Text(
                       'Burger',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(),
                     ),
                     Text(
                       '89',
                       style: TextStyle(
                         color: primaryColor,
-                        fontSize: 14,
                       ),
                     ),
                     Icon(
@@ -72,15 +67,12 @@ class ScheduledFoodMenuListState extends State<ScheduledFoodMenuList> {
                   children: [
                     Text(
                       'Burger',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(),
                     ),
                     Text(
                       '89',
                       style: TextStyle(
                         color: primaryColor,
-                        fontSize: 14,
                       ),
                     ),
                     Icon(
@@ -94,15 +86,12 @@ class ScheduledFoodMenuListState extends State<ScheduledFoodMenuList> {
                   children: [
                     Text(
                       'Burger',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(),
                     ),
                     Text(
                       '89',
                       style: TextStyle(
                         color: primaryColor,
-                        fontSize: 14,
                       ),
                     ),
                     Icon(
