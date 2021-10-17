@@ -94,9 +94,7 @@ class ViewMenuState extends State<ViewMenu> {
                                 children: [
                                   Text(
                                     'Kare Kare',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                    ),
+                                    style: TextStyle(),
                                   ),
                                   SizedBox(
                                     height: 5,
@@ -105,7 +103,6 @@ class ViewMenuState extends State<ViewMenu> {
                                     '70.00',
                                     style: TextStyle(
                                       color: primaryColor,
-                                      fontSize: 14,
                                     ),
                                   ),
                                 ],
@@ -137,7 +134,6 @@ class ViewMenuState extends State<ViewMenu> {
                   child: Text(
                     'Recents',
                     style: TextStyle(
-                      fontSize: 14,
                       color: primaryColor,
                     ),
                   ),
@@ -151,9 +147,7 @@ class ViewMenuState extends State<ViewMenu> {
               children: [
                 Text(
                   'Scheduled Food Menu',
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(),
                 ),
               ],
             ),
