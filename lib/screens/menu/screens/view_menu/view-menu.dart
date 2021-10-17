@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sandys_food_express/constants.dart';
+import 'package:sandys_food_express/screens/menu/widgets/scheduled-food-menu-list.dart';
 
 class ViewMenu extends StatefulWidget {
   ViewMenuState createState() => ViewMenuState();
 }
 
 class ViewMenuState extends State<ViewMenu> {
-  List<bool> expansionPanelsOpenState = [false, false, false, false];
-
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -26,13 +25,12 @@ class ViewMenuState extends State<ViewMenu> {
                     Navigator.pop(context);
                   },
                 ),
-                SizedBox(width: screenSize.width * 0.22),
+                SizedBox(width: screenSize.width * 0.185),
                 Text(
                   'Food Menu',
                   style: TextStyle(
                     color: primaryColor,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
                 ),
               ],
@@ -45,7 +43,6 @@ class ViewMenuState extends State<ViewMenu> {
                   style: TextStyle(
                     color: primaryColor,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 IconButton(
@@ -65,6 +62,7 @@ class ViewMenuState extends State<ViewMenu> {
                   10,
                   (index) {
                     return Container(
+                      width: 230,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -97,7 +95,7 @@ class ViewMenuState extends State<ViewMenu> {
                                   Text(
                                     'Kare Kare',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 14,
                                     ),
                                   ),
                                   SizedBox(
@@ -107,7 +105,7 @@ class ViewMenuState extends State<ViewMenu> {
                                     '70.00',
                                     style: TextStyle(
                                       color: primaryColor,
-                                      fontSize: 16,
+                                      fontSize: 14,
                                     ),
                                   ),
                                 ],
@@ -139,7 +137,7 @@ class ViewMenuState extends State<ViewMenu> {
                   child: Text(
                     'Recents',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: primaryColor,
                     ),
                   ),
@@ -154,332 +152,13 @@ class ViewMenuState extends State<ViewMenu> {
                 Text(
                   'Scheduled Food Menu',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
               ],
             ),
             SizedBox(height: 20),
-            ExpansionPanelList(
-              elevation: 1,
-              children: [
-                ExpansionPanel(
-                  isExpanded: expansionPanelsOpenState[0],
-                  canTapOnHeader: true,
-                  headerBuilder: (context, isOpen) {
-                    return Container(
-                      padding: EdgeInsets.all(20),
-                      child: Text(
-                        'August 1, 2020 3:00pm',
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    );
-                  },
-                  body: Container(
-                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              'Edit',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Burger',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '89',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Icon(
-                              Icons.remove_circle,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Burger',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '89',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Icon(
-                              Icons.remove_circle,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Burger',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '89',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Icon(
-                              Icons.remove_circle,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                ExpansionPanel(
-                  isExpanded: expansionPanelsOpenState[1],
-                  canTapOnHeader: true,
-                  headerBuilder: (context, isOpen) {
-                    return Container(
-                      padding: EdgeInsets.all(20),
-                      child: Text(
-                        'August 1, 2020 3:00pm',
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    );
-                  },
-                  body: Container(
-                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              'Edit',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Burger',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '89',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Icon(
-                              Icons.remove_circle,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Burger',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '89',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Icon(
-                              Icons.remove_circle,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Burger',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '89',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Icon(
-                              Icons.remove_circle,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                ExpansionPanel(
-                  isExpanded: expansionPanelsOpenState[2],
-                  canTapOnHeader: true,
-                  headerBuilder: (context, isOpen) {
-                    return Container(
-                      padding: EdgeInsets.all(20),
-                      child: Text(
-                        'August 1, 2020 3:00pm',
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    );
-                  },
-                  body: Container(
-                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              'Edit',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Burger',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '89',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Icon(
-                              Icons.remove_circle,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Burger',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '89',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Icon(
-                              Icons.remove_circle,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Burger',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '89',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Icon(
-                              Icons.remove_circle,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-              expansionCallback: (i, isOpen) {
-                setState(() {
-                  expansionPanelsOpenState[i] = !isOpen;
-                });
-              },
-            ),
+            ScheduledFoodMenuList(),
           ],
         ),
       ),
