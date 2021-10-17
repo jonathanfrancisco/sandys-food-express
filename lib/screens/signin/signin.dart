@@ -63,7 +63,9 @@ class SignInState extends State<SignIn> {
                         key: this.widget._formKey,
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                              vertical: 30, horizontal: 30),
+                            vertical: 30,
+                            horizontal: 30,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
@@ -71,8 +73,8 @@ class SignInState extends State<SignIn> {
                                 controller: this.widget._emailFieldController,
                                 validator: (value) =>
                                     signInViewModel.isValidEmail(value),
-                                style: TextStyle(),
                                 decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
                                   isDense: true,
                                   fillColor: Colors.white,
                                   filled: true,
@@ -92,8 +94,8 @@ class SignInState extends State<SignIn> {
                                     signInViewModel.isValidPasssword(value),
                                 obscureText:
                                     signInViewModel.obscurePasswordField,
-                                style: TextStyle(),
                                 decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
                                   isDense: true,
                                   fillColor: Colors.white,
                                   filled: true,
@@ -103,14 +105,22 @@ class SignInState extends State<SignIn> {
                                   ),
                                   alignLabelWithHint: true,
                                   hintText: "Password",
+                                  suffixIconConstraints: BoxConstraints(
+                                    minHeight: 35,
+                                    minWidth: 40,
+                                  ),
                                   suffixIcon: new GestureDetector(
                                     onTap: () => signInViewModel
                                         .toggleObscurePassworField(),
-                                    child: Icon(
-                                      signInViewModel.obscurePasswordField
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      color: Colors.grey,
+                                    child: Container(
+                                      padding: EdgeInsets.all(0),
+                                      margin: EdgeInsets.all(0),
+                                      child: Icon(
+                                        signInViewModel.obscurePasswordField
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ),
                                 ),

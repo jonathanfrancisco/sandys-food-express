@@ -45,9 +45,6 @@ class ResponseModal extends StatelessWidget {
           Text(
             this.message!,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18,
-            ),
           ),
         ],
       ),
@@ -81,7 +78,6 @@ class ResponseModal extends StatelessWidget {
                 ),
                 child: Text(
                   type == 'SUCCESS' ? 'CONTINUE' : 'TRY AGAIN',
-                  style: TextStyle(fontSize: 18),
                 ),
                 onPressed: () async {
                   onContinueOrCancel();

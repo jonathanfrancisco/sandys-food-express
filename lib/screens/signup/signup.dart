@@ -72,6 +72,7 @@ class SignUpState extends State<SignUp> {
                                 controller: this.widget._nameFieldController,
                                 style: TextStyle(),
                                 decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
                                   isDense: true,
                                   fillColor: Colors.white,
                                   filled: true,
@@ -90,6 +91,7 @@ class SignUpState extends State<SignUp> {
                                 controller: this.widget._emailFieldController,
                                 style: TextStyle(),
                                 decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
                                   isDense: true,
                                   fillColor: Colors.white,
                                   filled: true,
@@ -108,6 +110,7 @@ class SignUpState extends State<SignUp> {
                                 controller: this.widget._addressFieldController,
                                 style: TextStyle(),
                                 decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
                                   isDense: true,
                                   fillColor: Colors.white,
                                   filled: true,
@@ -129,6 +132,7 @@ class SignUpState extends State<SignUp> {
                                     signUpViewModel.obscurePasswordField,
                                 style: TextStyle(),
                                 decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10),
                                   isDense: true,
                                   fillColor: Colors.white,
                                   filled: true,
@@ -138,6 +142,10 @@ class SignUpState extends State<SignUp> {
                                   ),
                                   alignLabelWithHint: true,
                                   hintText: "Password",
+                                  suffixIconConstraints: BoxConstraints(
+                                    minHeight: 35,
+                                    minWidth: 40,
+                                  ),
                                   suffixIcon: new GestureDetector(
                                     onTap: () {
                                       signUpViewModel
