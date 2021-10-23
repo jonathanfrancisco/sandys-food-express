@@ -184,10 +184,6 @@ class SignUpState extends State<SignUp> {
                                   padding: EdgeInsets.all(12),
                                 ),
                                 onPressed: () async {
-                                  debugPrint("Hello World!");
-                                  debugPrint("Hello World!");
-                                  debugPrint("Hello World!");
-
                                   if (!this
                                       .widget
                                       ._formKey

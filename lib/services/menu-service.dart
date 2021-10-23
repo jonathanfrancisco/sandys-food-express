@@ -52,6 +52,7 @@ class MenuService {
     try {
       await this._dio.delete('$apiHostEndpoint/menu/foods/$id');
     } on DioError catch (e) {
+      print(e.toString());
       handleDioErrors(e);
     }
   }

@@ -34,8 +34,6 @@ class AddFoodModalState extends State<AddFoodModal> {
     setState(() {
       if (pickedFile != null) {
         _foodImage = File(pickedFile.path);
-      } else {
-        debugPrint('No image selected.');
       }
     });
   }
@@ -45,8 +43,6 @@ class AddFoodModalState extends State<AddFoodModal> {
     setState(() {
       if (pickedFile != null) {
         _foodImage = File(pickedFile.path);
-      } else {
-        debugPrint('No image selected.');
       }
     });
   }

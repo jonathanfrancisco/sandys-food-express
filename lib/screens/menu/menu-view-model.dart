@@ -14,8 +14,8 @@ class MenuViewModel extends ChangeNotifier {
 
   ViewState _state = ViewState.Idle;
   bool _isMenuTableLoading = false;
-  String _menuTableErrorCode = '';
-  String _menuTableErrorMessage = '';
+  String errorCode = '';
+  String errorMessage = '';
   List<dynamic> _foods = [];
 
   MenuViewModel() {
@@ -24,8 +24,8 @@ class MenuViewModel extends ChangeNotifier {
 
   ViewState get state => _state;
   bool get isMenuTableLoading => _isMenuTableLoading;
-  String get menuTableErrorCode => _menuTableErrorCode;
-  String get menuTableErrorMessage => _menuTableErrorMessage;
+  String get menuTableErrorCode => errorCode;
+  String get menuTableErrorMessage => errorMessage;
   List<dynamic> get foods => _foods;
 
   void setState(ViewState viewState) {
@@ -39,8 +39,8 @@ class MenuViewModel extends ChangeNotifier {
     try {
       _foods = await _menuService.getFoods(query);
     } on HttpResponseError catch (e) {
-      _menuTableErrorCode = e.errorCode;
-      _menuTableErrorMessage = e.message;
+      errorCode = e.errorCode;
+      errorMessage = e.message;
     }
 
     _isMenuTableLoading = false;
@@ -51,12 +51,18 @@ class MenuViewModel extends ChangeNotifier {
       String name, double price, String? filename, String filepath) async {
     String pictureKey =
         await _s3service.uploadFoodPictureToS3(filename, filepath);
-    var response = await _menuService.addFood(name, price, pictureKey);
-    debugPrint(response.toString());
+    await _menuService.addFood(name, price, pictureKey);
   }
 
-  Future<void> deleteFood(int id) async {
-    await _menuService.deleteFood(id);
+  Future<bool> deleteFood(int id) async {
+    try {
+      await _menuService.deleteFood(id);
+      return true;
+    } on HttpResponseError catch (e) {
+      errorCode = e.errorCode;
+      errorMessage = e.message;
+      return false;
+    }
   }
 
   Future<void> createScheduledMenu(

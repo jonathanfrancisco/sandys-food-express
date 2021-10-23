@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:sandys_food_express/common/widgets/response-modal.dart';
 import 'package:sandys_food_express/constants.dart';
 
 import '../menu-view-model.dart';
@@ -77,7 +79,23 @@ class MenuFoodTableRowState extends State<MenuFoodTableRow> {
                     color: primaryColor,
                   ),
                   onTap: () async {
-                    await menuViewModel.deleteFood(this.widget._id);
+                    bool isDeleted =
+                        await menuViewModel.deleteFood(this.widget._id);
+                    if (!isDeleted) {
+                      showAnimatedDialog(
+                        barrierDismissible: true,
+                        context: context,
+                        builder: (context) {
+                          return ResponseModal(
+                            type: 'ERROR',
+                            message: menuViewModel.errorMessage,
+                            onContinueOrCancel: () {
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                      );
+                    }
                     await menuViewModel.loadFoods();
                   },
                 ),

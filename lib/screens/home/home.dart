@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
       child: WillPopScope(
         onWillPop: () async {
           // do nothing
-          debugPrint('I was here');
+
           return false;
         },
         child: ProgressHUD(
