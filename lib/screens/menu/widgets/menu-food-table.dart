@@ -132,11 +132,14 @@ class MenuFoodTableState extends State<MenuFoodTable> {
               vertical: 10,
             ),
             child: TextField(
-              style: TextStyle(
-                fontSize: 14,
-              ),
+              style: TextStyle(),
               controller: _searchFieldController,
               decoration: new InputDecoration(
+                contentPadding: EdgeInsets.all(10),
+                suffixIconConstraints: BoxConstraints(
+                  minHeight: 35,
+                  minWidth: 40,
+                ),
                 suffixIcon: Icon(Icons.search, color: Colors.grey),
                 isDense: true,
                 focusedBorder: OutlineInputBorder(

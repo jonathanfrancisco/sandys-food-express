@@ -168,6 +168,7 @@ class AddFoodModalState extends State<AddFoodModal> {
                 },
                 controller: _nameFieldController,
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(10),
                   hintText: 'Name',
                   isDense: true,
                   border: OutlineInputBorder(
@@ -209,6 +210,7 @@ class AddFoodModalState extends State<AddFoodModal> {
                   controller: _priceFieldController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(10),
                     suffix: Text('PHP '),
                     hintText: 'Price',
                     isDense: true,
@@ -264,31 +266,33 @@ class AddFoodModalState extends State<AddFoodModal> {
                   SizedBox(
                     width: 15,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Upload Image',
-                        style: TextStyle(
-                          color: primaryColor,
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Upload Image',
+                          style: TextStyle(
+                            color: primaryColor,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Image must be jpg, jpeg, png format',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
+                        Text(
+                          'Image must be jpg, jpeg, png format',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Maximum of 10mb',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      )
-                    ],
-                  ),
+                        Text(
+                          'Maximum of 10mb',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
                 ],
               ),
               SizedBox(height: 30),
@@ -306,9 +310,6 @@ class AddFoodModalState extends State<AddFoodModal> {
                       onPressed: _submitForm,
                       child: Text(
                         'Add',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
                       ),
                     ),
                   ),
@@ -332,7 +333,6 @@ class AddFoodModalState extends State<AddFoodModal> {
                         'Cancel',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 18,
                         ),
                       ),
                     ),

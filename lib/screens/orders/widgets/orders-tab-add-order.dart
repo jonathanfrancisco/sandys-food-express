@@ -139,6 +139,7 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                             },
                             controller: _customerNameFieldController,
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
                               hintText: 'Customer Name',
                               isDense: true,
                               border: OutlineInputBorder(
@@ -248,6 +249,7 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                             },
                             controller: _customerAddressFieldController,
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
                               hintText: 'Delivery Address',
                               isDense: true,
                               border: OutlineInputBorder(

@@ -48,7 +48,7 @@ class OrdersQueueState extends State<OrdersQueue> {
               Text(
                 'Orders Queue',
                 style: TextStyle(
-                  fontSize: 50,
+                  fontSize: 40,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),

@@ -108,7 +108,7 @@ class WithAppBarDrawer extends StatelessWidget {
             child: ListView(
               children: [
                 DrawerHeader(
-                  child: Text('Drawer Header'),
+                  child: Text("Sandy's Food Express"),
                 ),
                 ..._drawerItems.map((e) {
                   return buildDrawerItem(e.icon, e.title, e.isActive, () {
