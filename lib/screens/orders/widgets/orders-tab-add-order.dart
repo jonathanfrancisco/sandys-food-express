@@ -292,13 +292,7 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                       ),
                       child: Column(
                         children: [
-                          MenuFoodTable(
-                            selectedFoodIds: _selectedFoodIds,
-                            onMenuFoodTableRowSelectAllToggle:
-                                _onMenuFoodTableRowSelectAllToggle,
-                            onMenuFoodTableRowSelectToggle:
-                                _onMenuFoodTableRowSelectToggle,
-                          ),
+                          MenuFoodTable(),
                         ],
                       ),
                     ),

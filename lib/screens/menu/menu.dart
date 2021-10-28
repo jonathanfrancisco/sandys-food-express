@@ -21,7 +21,6 @@ class Menu extends StatefulWidget {
 }
 
 class MenuState extends State<Menu> {
-  List<int> _selectedFoodIds = [];
   DateTime _scheduledDate = DateTime.now();
   TimeOfDay _scheduledTime = TimeOfDay.now();
 
@@ -43,32 +42,6 @@ class MenuState extends State<Menu> {
     );
 
     setState(() => _scheduledTime = selectedScheduledTime!);
-  }
-
-  _onMenuFoodTableRowSelectToggle(int foodId) {
-    setState(() {
-      if (_selectedFoodIds.indexOf(foodId) == -1) {
-        _selectedFoodIds.add(foodId);
-      } else {
-        _selectedFoodIds.remove(foodId);
-      }
-    });
-  }
-
-  _onMenuFoodTableRowSelectAllToggle(List<int> availableFoodIds) {
-    if (_selectedFoodIds.length == availableFoodIds.length) {
-      return setState(() {
-        _selectedFoodIds.clear();
-      });
-    }
-
-    return setState(() {
-      availableFoodIds.forEach((foodId) {
-        if (_selectedFoodIds.indexOf(foodId) == -1) {
-          _selectedFoodIds.add(foodId);
-        }
-      });
-    });
   }
 
   @override
@@ -135,10 +108,6 @@ class MenuState extends State<Menu> {
             SizedBox(height: 8),
             MenuFoodTableInfo(),
             MenuFoodTable(
-              selectedFoodIds: _selectedFoodIds,
-              onMenuFoodTableRowSelectAllToggle:
-                  _onMenuFoodTableRowSelectAllToggle,
-              onMenuFoodTableRowSelectToggle: _onMenuFoodTableRowSelectToggle,
               hasActions: true,
             ),
             SizedBox(
@@ -224,7 +193,7 @@ class MenuState extends State<Menu> {
                   },
                 );
 
-                if (_selectedFoodIds.isEmpty) {
+                if (menuViewModel.selectedFoodIds.isEmpty) {
                   await showAnimatedDialog(
                     barrierDismissible: true,
                     context: context,
@@ -251,7 +220,7 @@ class MenuState extends State<Menu> {
                 );
 
                 await menuViewModel.createScheduledMenu(
-                  _selectedFoodIds,
+                  menuViewModel.selectedFoodIds,
                   completeScheduledDateTime,
                 );
 

@@ -4,27 +4,17 @@ import 'package:provider/provider.dart';
 import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sandys_food_express/screens/menu/widgets/menu-food-table-row.dart';
-
-import '../../../constants.dart';
+import 'package:sandys_food_express/constants.dart';
 
 class MenuFoodTable extends StatefulWidget {
-  final List<int> _selectedFoodIds;
-  final Function _onMenuFoodTableRowSelectAllTogle;
-  final Function _onMenuFoodTableRowSelectToggle;
   final bool _hasActions;
 
   @override
   MenuFoodTableState createState() => MenuFoodTableState();
 
   MenuFoodTable({
-    required List<int> selectedFoodIds,
-    required Function onMenuFoodTableRowSelectAllToggle,
-    required Function onMenuFoodTableRowSelectToggle,
     bool hasActions = false,
-  })  : _selectedFoodIds = selectedFoodIds,
-        _onMenuFoodTableRowSelectAllTogle = onMenuFoodTableRowSelectAllToggle,
-        _onMenuFoodTableRowSelectToggle = onMenuFoodTableRowSelectToggle,
-        _hasActions = hasActions;
+  }) : _hasActions = hasActions;
 }
 
 class MenuFoodTableState extends State<MenuFoodTable> {
@@ -49,6 +39,9 @@ class MenuFoodTableState extends State<MenuFoodTable> {
 
   @override
   Widget build(BuildContext context) {
+    MenuViewModel menuViewModel =
+        Provider.of<MenuViewModel>(context, listen: false);
+    menuViewModel.loadFoods();
     return Container(
       height: 400,
       decoration: BoxDecoration(
@@ -105,16 +98,15 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                   children: [
                     Checkbox(
                       activeColor: primaryColor,
-                      value: this.widget._selectedFoodIds.length ==
+                      value: menuViewModel.selectedFoodIds.length ==
                           menuViewModel.foods.length,
                       onChanged: (bool? value) {
                         List<int> availableFoodIds =
                             menuViewModel.foods.map((food) {
-                          return food['id'] as int;
+                          return food.id;
                         }).toList();
-                        this.widget._onMenuFoodTableRowSelectAllTogle(
-                              availableFoodIds,
-                            );
+                        menuViewModel.onMenuFoodTableRowSelectAllToggle(
+                            availableFoodIds);
                       },
                     ),
                     Text(
@@ -225,15 +217,15 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                     itemBuilder: (context, index) {
                       var food = menuViewModel.foods[index];
                       bool isSelected =
-                          this.widget._selectedFoodIds.indexOf(food['id']) > -1;
+                          menuViewModel.selectedFoodIds.indexOf(food.id) > -1;
 
                       return MenuFoodTableRow(
-                        id: food['id'],
-                        name: food['name'],
-                        price: double.parse(food['price']),
-                        picture: food['picture'],
+                        id: food.id,
+                        name: food.name,
+                        price: double.parse(food.price),
+                        picture: food.picture,
                         onMenuFoodTableRowSelect:
-                            this.widget._onMenuFoodTableRowSelectToggle,
+                            menuViewModel.onMenuFoodTableRowSelectToggle,
                         hasActions: this.widget._hasActions,
                         isSelected: isSelected,
                       );

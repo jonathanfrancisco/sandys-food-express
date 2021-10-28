@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:sandys_food_express/common/errors/handle-dio-errors.dart';
 import 'package:sandys_food_express/constants.dart';
+import 'package:sandys_food_express/models/Food.dart';
 import 'package:sandys_food_express/service-locator.dart';
 import 'package:sandys_food_express/services/secure-storage.dart';
 
@@ -8,7 +11,7 @@ class MenuService {
   final Dio _dio = Dio();
   final SecureStorage _secureStorage = locator<SecureStorage>();
 
-  Future<List<dynamic>> getFoods(String query) async {
+  Future<List<Food>> getFoods(String query) async {
     String accessToken = await SecureStorage().readSecureData('accessToken');
     _dio.options.headers['Authorization'] = 'Bearer $accessToken';
 
@@ -17,9 +20,12 @@ class MenuService {
         '$apiHostEndpoint/menu/foods',
         queryParameters: {'q': query},
       );
-      var httpResponseBody = httpResponse.data;
 
-      return httpResponseBody['data'];
+      List<dynamic> parsedJsonFoods = httpResponse.data['data'];
+      List<Food> foods =
+          List<Food>.from(parsedJsonFoods.map((i) => Food.fromJson(i)));
+
+      return foods;
     } on DioError catch (e) {
       return handleDioErrors(e);
     }

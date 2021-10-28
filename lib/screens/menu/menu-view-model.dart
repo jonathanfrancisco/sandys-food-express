@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:sandys_food_express/common/errors/http-response-error.dart';
+import 'package:sandys_food_express/models/Food.dart';
 import 'package:sandys_food_express/service-locator.dart';
 import 'package:sandys_food_express/services/menu-service.dart';
 import 'package:sandys_food_express/services/s3-service.dart';
@@ -16,7 +17,8 @@ class MenuViewModel extends ChangeNotifier {
   bool _isMenuTableLoading = false;
   String errorCode = '';
   String errorMessage = '';
-  List<dynamic> _foods = [];
+  List<Food> _foods = [];
+  List<int> _selectedFoodIds = [];
 
   MenuViewModel() {
     loadFoods();
@@ -26,7 +28,8 @@ class MenuViewModel extends ChangeNotifier {
   bool get isMenuTableLoading => _isMenuTableLoading;
   String get menuTableErrorCode => errorCode;
   String get menuTableErrorMessage => errorMessage;
-  List<dynamic> get foods => _foods;
+  List<Food> get foods => _foods;
+  List<int> get selectedFoodIds => _selectedFoodIds;
 
   void setState(ViewState viewState) {
     _state = viewState;
@@ -69,7 +72,29 @@ class MenuViewModel extends ChangeNotifier {
     List<int> selectedFoodIds,
     DateTime scheduledDateTime,
   ) async {
-    print("i was here 1");
     await _menuService.createScheduledMenu(selectedFoodIds, scheduledDateTime);
+  }
+
+  void onMenuFoodTableRowSelectToggle(int foodId) {
+    if (_selectedFoodIds.indexOf(foodId) == -1) {
+      _selectedFoodIds.add(foodId);
+    } else {
+      _selectedFoodIds.remove(foodId);
+    }
+
+    notifyListeners();
+  }
+
+  void onMenuFoodTableRowSelectAllToggle(List<int> availableFoodIds) {
+    if (_selectedFoodIds.length == availableFoodIds.length) {
+      _selectedFoodIds.clear();
+    } else {
+      availableFoodIds.forEach((foodId) {
+        if (_selectedFoodIds.indexOf(foodId) == -1) {
+          _selectedFoodIds.add(foodId);
+        }
+      });
+    }
+    notifyListeners();
   }
 }
