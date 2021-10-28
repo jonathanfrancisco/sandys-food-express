@@ -4,7 +4,6 @@ import 'package:sandys_food_express/screens/orders/widgets/orders-tab.dart';
 import 'package:sandys_food_express/screens/orders/widgets/deliveries-tab.dart';
 import 'package:sandys_food_express/screens/orders/widgets/processed-orders-tab.dart';
 
-
 class Orders extends StatelessWidget {
   static final routeName = '/orders';
 
@@ -35,8 +34,8 @@ class Orders extends StatelessWidget {
           child: TabBarView(
             children: [
               OrdersTab(),
-              Deliveries(),
-              ProcessedOrders(),
+              DeliveriesTab(),
+              ProcessedOrdersTab(),
             ],
           ),
         ),
