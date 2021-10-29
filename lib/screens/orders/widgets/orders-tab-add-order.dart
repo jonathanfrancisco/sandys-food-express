@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sandys_food_express/constants.dart';
 import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
 import 'package:sandys_food_express/screens/menu/widgets/menu-food-table.dart';
+import 'package:sandys_food_express/screens/orders/widgets/selected-food.dart';
 
 class OrdersTabAddOrder extends StatefulWidget {
   static final String routeName = '/menu/add-order';
@@ -15,37 +16,9 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
   final _formKey = GlobalKey<FormState>();
   final _customerNameFieldController = TextEditingController();
   final _customerAddressFieldController = TextEditingController();
-  final _searchFieldController = TextEditingController();
 
   DateTime _scheduledDate = DateTime.now();
   TimeOfDay _scheduledTime = TimeOfDay.now();
-  List<int> _selectedFoodIds = [];
-
-  _onMenuFoodTableRowSelectToggle(int foodId) {
-    setState(() {
-      if (_selectedFoodIds.indexOf(foodId) == -1) {
-        _selectedFoodIds.add(foodId);
-      } else {
-        _selectedFoodIds.remove(foodId);
-      }
-    });
-  }
-
-  _onMenuFoodTableRowSelectAllToggle(List<int> availableFoodIds) {
-    if (_selectedFoodIds.length == availableFoodIds.length) {
-      return setState(() {
-        _selectedFoodIds.clear();
-      });
-    }
-
-    return setState(() {
-      availableFoodIds.forEach((foodId) {
-        if (_selectedFoodIds.indexOf(foodId) == -1) {
-          _selectedFoodIds.add(foodId);
-        }
-      });
-    });
-  }
 
   _selectScheduledDate(BuildContext context) async {
     final selectedScheduledDate = await showDatePicker(
@@ -69,9 +42,6 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
 
   @override
   Widget build(BuildContext context) {
-    MenuViewModel menuViewModel =
-        Provider.of<MenuViewModel>(context, listen: false);
-
     Size screenSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -282,20 +252,8 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                       ],
                     ),
                     SizedBox(height: 15),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: borderColor,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          MenuFoodTable(),
-                        ],
-                      ),
-                    ),
+                    MenuFoodTable(),
+                    SelectedFood(),
                   ],
                 ),
               ),

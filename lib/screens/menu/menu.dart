@@ -107,9 +107,7 @@ class MenuState extends State<Menu> {
             ),
             SizedBox(height: 8),
             MenuFoodTableInfo(),
-            MenuFoodTable(
-              hasActions: true,
-            ),
+            MenuFoodTable(),
             SizedBox(
               height: 20,
             ),
