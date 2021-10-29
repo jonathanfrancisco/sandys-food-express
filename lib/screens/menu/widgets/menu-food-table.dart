@@ -2,13 +2,13 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:sandys_food_express/common/widgets/menu-food-table-header-loading.dart';
+import 'package:sandys_food_express/common/widgets/menu-food-table-loading.dart';
+import 'package:sandys_food_express/common/widgets/menu-food-table-row.dart';
 import 'package:sandys_food_express/common/widgets/response-modal.dart';
+import 'package:sandys_food_express/common/widgets/search-bar.dart';
 import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
 
-import 'package:sandys_food_express/screens/menu/widgets/menu-food-table-header-loading.dart';
-import 'package:sandys_food_express/screens/menu/widgets/search-bar.dart';
-import 'package:sandys_food_express/screens/menu/widgets/menu-food-table-loading.dart';
-import 'package:sandys_food_express/screens/menu/widgets/menu-food-table-row.dart';
 import 'package:sandys_food_express/constants.dart';
 
 class MenuFoodTable extends StatefulWidget {

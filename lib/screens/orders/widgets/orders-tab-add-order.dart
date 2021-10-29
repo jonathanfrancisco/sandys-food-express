@@ -253,7 +253,7 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                     ),
                     SizedBox(height: 15),
                     MenuFoodTable(),
-                    SelectedFood(),
+                    // SelectedFood(),
                   ],
                 ),
               ),

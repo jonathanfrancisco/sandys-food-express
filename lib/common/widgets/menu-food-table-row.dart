@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sandys_food_express/constants.dart';
 import 'package:sandys_food_express/models/Food.dart';
-
-import '../menu-view-model.dart';
 
 class MenuFoodTableRow extends StatefulWidget {
   final Food _food;

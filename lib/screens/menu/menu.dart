@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 import 'package:sandys_food_express/common/widgets/loading-dialog.dart';
+import 'package:sandys_food_express/screens/menu/widgets/menu-food-table-info.dart';
 import 'package:sandys_food_express/common/widgets/response-modal.dart';
 import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
 import 'package:sandys_food_express/screens/menu/screens/view_menu/view-menu.dart';
 
-import 'package:sandys_food_express/screens/menu/widgets/menu-food-table-info.dart';
 import 'package:sandys_food_express/screens/menu/widgets/menu-food-table.dart';
 import 'package:sandys_food_express/screens/menu/widgets/add-food-modal.dart';
 
