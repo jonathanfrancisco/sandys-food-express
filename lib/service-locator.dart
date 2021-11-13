@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:sandys_food_express/screens/home/home-view-model.dart';
 import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
+import 'package:sandys_food_express/screens/orders/orders-tab-add-order-view-model.dart';
 import 'package:sandys_food_express/screens/signin/signin-view-model.dart';
 import 'package:sandys_food_express/screens/signup/signup-view-model.dart';
 import 'package:sandys_food_express/services/auth-service.dart';
@@ -16,6 +17,8 @@ void setupLocator() {
   locator.registerLazySingleton<SignUpViewModel>(() => SignUpViewModel());
   locator.registerLazySingleton<HomeViewModel>(() => HomeViewModel());
   locator.registerFactory<MenuViewModel>(() => MenuViewModel());
+  locator.registerFactory<OrdersTabAddOrderViewModel>(
+      () => OrdersTabAddOrderViewModel());
 
   // Services
   locator.registerLazySingleton<SecureStorage>(() => SecureStorage());

@@ -11,3 +11,5 @@ const Color actionBtnColor = Color(0xFFFDE7C1);
 
 const Color tableColTextColor = Color(0xFFA3A3A3);
 const Color tableRowTextColor = Color(0xFF585959);
+
+const Color disabledColor = Color(0xFFC0C0C0);

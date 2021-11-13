@@ -1,22 +1,21 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:sandys_food_express/common/widgets/menu-food-table-header-loading.dart';
 import 'package:sandys_food_express/common/widgets/menu-food-table-loading.dart';
 import 'package:sandys_food_express/common/widgets/menu-food-table-row.dart';
-import 'package:sandys_food_express/common/widgets/response-modal.dart';
 import 'package:sandys_food_express/common/widgets/search-bar.dart';
-import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
 
 import 'package:sandys_food_express/constants.dart';
+import 'package:sandys_food_express/models/Food.dart';
+import 'package:sandys_food_express/screens/orders/orders-tab-add-order-view-model.dart';
 
-class MenuFoodTable extends StatefulWidget {
+class OrderMenuTable extends StatefulWidget {
   @override
-  MenuFoodTableState createState() => MenuFoodTableState();
+  OrderMenuTableState createState() => OrderMenuTableState();
 }
 
-class MenuFoodTableState extends State<MenuFoodTable> {
+class OrderMenuTableState extends State<OrderMenuTable> {
   final _searchFieldController = TextEditingController();
 
   @override
@@ -25,44 +24,22 @@ class MenuFoodTableState extends State<MenuFoodTable> {
   }
 
   _onSearchChanged(String query) {
-    MenuViewModel menuViewModel =
-        Provider.of<MenuViewModel>(context, listen: false);
+    OrdersTabAddOrderViewModel ordersTabAddOrderViewModel =
+        Provider.of<OrdersTabAddOrderViewModel>(context, listen: false);
     EasyDebounce.debounce(
       'search-field-debouncer',
       Duration(milliseconds: 500),
-      () async => await menuViewModel.loadFoods(
+      () async => await ordersTabAddOrderViewModel.loadFoods(
         query: _searchFieldController.text,
       ),
     );
   }
 
-  _onMenuFoodTableRowDelete(int foodId) async {
-    MenuViewModel menuViewModel =
-        Provider.of<MenuViewModel>(context, listen: false);
-    bool isDeleted = await menuViewModel.deleteFood(foodId);
-    if (!isDeleted) {
-      showAnimatedDialog(
-        barrierDismissible: true,
-        context: context,
-        builder: (context) {
-          return ResponseModal(
-            type: 'ERROR',
-            message: menuViewModel.errorMessage,
-            onContinueOrCancel: () {
-              Navigator.of(context).pop();
-            },
-          );
-        },
-      );
-    }
-    await menuViewModel.loadFoods();
-  }
-
   @override
   Widget build(BuildContext context) {
-    MenuViewModel menuViewModel =
-        Provider.of<MenuViewModel>(context, listen: false);
-    menuViewModel.loadFoods();
+    OrdersTabAddOrderViewModel ordersTabAddOrderViewModel =
+        Provider.of<OrdersTabAddOrderViewModel>(context, listen: false);
+    ordersTabAddOrderViewModel.loadFoods();
 
     return Container(
       height: 300,
@@ -85,9 +62,9 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                 ),
               ),
             ),
-            child: Consumer<MenuViewModel>(
-              builder: (context, menuViewModel, child) {
-                if (menuViewModel.isMenuTableLoading) {
+            child: Consumer<OrdersTabAddOrderViewModel>(
+              builder: (context, ordersTabAddOrderViewModel, child) {
+                if (ordersTabAddOrderViewModel.isOrderMenuTableLoading) {
                   return MenuFoodTableHeaderLoading();
                 }
 
@@ -96,19 +73,23 @@ class MenuFoodTableState extends State<MenuFoodTable> {
                   children: [
                     Checkbox(
                       activeColor: primaryColor,
-                      value: menuViewModel.selectedFoodIds.length ==
-                          menuViewModel.foods.length,
+                      value:
+                          ordersTabAddOrderViewModel.selectedFoodIds.length ==
+                              ordersTabAddOrderViewModel.availableFoodsCount,
                       onChanged: (bool? value) {
-                        List<int> availableFoodIds =
-                            menuViewModel.foods.map((food) {
+                        List<int> availableFoodIds = ordersTabAddOrderViewModel
+                            .foods
+                            .where((food) => food.isAvailableToday == true)
+                            .map((food) {
                           return food.id;
                         }).toList();
-                        menuViewModel.onMenuFoodTableRowSelectAllToggle(
-                            availableFoodIds);
+                        ordersTabAddOrderViewModel
+                            .onMenuFoodTableRowSelectAllToggle(
+                                availableFoodIds);
                       },
                     ),
                     Text(
-                      '${menuViewModel.foods.length} items',
+                      '${ordersTabAddOrderViewModel.availableFoodsCount} items',
                       style: TextStyle(),
                     )
                   ],
@@ -120,32 +101,32 @@ class MenuFoodTableState extends State<MenuFoodTable> {
             searchFieldController: _searchFieldController,
             onSearchChanged: _onSearchChanged,
           ),
-          Consumer<MenuViewModel>(
-            builder: (context, menuViewModel, child) {
-              if (menuViewModel.isMenuTableLoading) {
+          Consumer<OrdersTabAddOrderViewModel>(
+            builder: (context, ordersTabAddOrderViewModel, child) {
+              if (ordersTabAddOrderViewModel.isOrderMenuTableLoading) {
                 return MenuFoodTableLoading();
               } else {
                 return Expanded(
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      await menuViewModel.loadFoods();
+                      await ordersTabAddOrderViewModel.loadFoods();
                     },
                     child: ListView.builder(
-                      itemCount: menuViewModel.foods.length,
+                      itemCount: ordersTabAddOrderViewModel.foods.length,
                       itemBuilder: (context, index) {
-                        var food = menuViewModel.foods[index];
-                        bool isSelected =
-                            menuViewModel.selectedFoodIds.indexOf(food.id) > -1;
-
+                        Food food = ordersTabAddOrderViewModel.foods[index];
+                        bool isSelected = ordersTabAddOrderViewModel
+                                .selectedFoodIds
+                                .indexOf(food.id) >
+                            -1;
                         return MenuFoodTableRow(
                           food: food,
-                          onMenuFoodTableRowSelect:
-                              menuViewModel.onMenuFoodTableRowSelectToggle,
-                          onMenuFoodTableRowDelete: () =>
-                              _onMenuFoodTableRowDelete(food.id),
-                          hasActions: true,
+                          onMenuFoodTableRowSelect: ordersTabAddOrderViewModel
+                              .onMenuFoodTableRowSelectToggle,
+                          onMenuFoodTableRowDelete: () => {},
+                          hasActions: false,
                           isSelected: isSelected,
-                          isDisabled: false,
+                          isDisabled: food.isAvailableToday ? false : true,
                         );
                       },
                     ),

@@ -36,7 +36,7 @@ class SearchBar extends StatelessWidget {
           ),
           hintText: 'Search here',
         ),
-        onChanged: (String value) => _onSearchChanged,
+        onChanged: (String value) => _onSearchChanged(value),
       ),
     );
   }

@@ -8,6 +8,7 @@ class MenuFoodTableRow extends StatefulWidget {
   final Function _onMenuFoodTableRowDelete;
   final bool _hasActions;
   bool _isSelected;
+  final bool _isDisabled;
 
   MenuFoodTableRow({
     required Food food,
@@ -15,11 +16,13 @@ class MenuFoodTableRow extends StatefulWidget {
     required Function onMenuFoodTableRowDelete,
     bool hasActions = false,
     required bool isSelected,
+    bool isDisabled = false,
   })  : _food = food,
         _onMenuFoodTableRowSelect = onMenuFoodTableRowSelect,
         _hasActions = hasActions,
         _onMenuFoodTableRowDelete = onMenuFoodTableRowDelete,
-        _isSelected = isSelected;
+        _isSelected = isSelected,
+        _isDisabled = isDisabled;
 
   @override
   MenuFoodTableRowState createState() => MenuFoodTableRowState();
@@ -29,7 +32,9 @@ class MenuFoodTableRowState extends State<MenuFoodTableRow> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
+        color: this.widget._isSelected ? accentColor : null,
         border: Border(
           bottom: BorderSide(
             color: borderColor,
@@ -37,23 +42,26 @@ class MenuFoodTableRowState extends State<MenuFoodTableRow> {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Checkbox(
             activeColor: primaryColor,
             value: this.widget._isSelected,
-            onChanged: (bool? value) {
-              this.widget._onMenuFoodTableRowSelect(this.widget._food.id);
-            },
+            onChanged: this.widget._isDisabled
+                ? null
+                : (bool? value) {
+                    this.widget._onMenuFoodTableRowSelect(this.widget._food.id);
+                  },
           ),
           Text(
             this.widget._food.name,
-            style: TextStyle(),
+            style: TextStyle(
+                color: this.widget._isDisabled ? disabledColor : null),
           ),
           Text(
             this.widget._food.price.toString(),
             style: TextStyle(
-              color: primaryColor,
+              color: this.widget._isDisabled ? disabledColor : primaryColor,
             ),
           ),
           if (this.widget._hasActions)

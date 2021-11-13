@@ -9,6 +9,9 @@ class Food {
   final String picture;
   final String price;
 
+  @JsonKey(name: 'is_available_today')
+  final bool isAvailableToday;
+
   @JsonKey(name: 'owner_id')
   final int ownerId;
 
@@ -23,6 +26,7 @@ class Food {
     required this.name,
     required this.picture,
     required this.price,
+    required this.isAvailableToday,
     required this.ownerId,
     required this.createdAt,
     required this.updatedAt,

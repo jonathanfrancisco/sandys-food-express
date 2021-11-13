@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sandys_food_express/constants.dart';
-import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
-import 'package:sandys_food_express/screens/menu/widgets/menu-food-table.dart';
-import 'package:sandys_food_express/screens/orders/widgets/selected-food.dart';
+import 'package:sandys_food_express/screens/orders/orders-tab-add-order-view-model.dart';
+import 'package:sandys_food_express/screens/orders/widgets/added-food-order.dart';
+import 'package:sandys_food_express/screens/orders/widgets/order-menu-table.dart';
+import 'package:sandys_food_express/screens/orders/widgets/order-total-summary.dart';
 
 class OrdersTabAddOrder extends StatefulWidget {
   static final String routeName = '/menu/add-order';
@@ -252,10 +253,107 @@ class OrdersTabAddOrderState extends State<OrdersTabAddOrder> {
                       ],
                     ),
                     SizedBox(height: 15),
-                    MenuFoodTable(),
-                    // SelectedFood(),
+                    OrderMenuTable(),
+                    SizedBox(height: 15),
+                    Consumer<OrdersTabAddOrderViewModel>(
+                        builder: (context, ordersTabAddOrderViewModel, child) {
+                      List<Widget> addedOrders =
+                          ordersTabAddOrderViewModel.orders
+                              .map((e) => AddedFoodOrder(
+                                    id: e['id'],
+                                    name: e['name'],
+                                    picture: e['picture'],
+                                    price: e['price'],
+                                    quantity: e['quantity'],
+                                    onIncrease: ordersTabAddOrderViewModel
+                                        .onOrderQuantityIncrease,
+                                    onDecrease: ordersTabAddOrderViewModel
+                                        .onOrderQuantityDecrease,
+                                    onRemove: ordersTabAddOrderViewModel
+                                        .onOrderRemove,
+                                  ))
+                              .toList();
+                      return Column(
+                        children: addedOrders,
+                      );
+                    }),
+                    Consumer<OrdersTabAddOrderViewModel>(
+                        builder: (context, ordersTabAddOrderViewModel, child) {
+                      String subTotal = "0.00";
+
+                      if (ordersTabAddOrderViewModel.orders.length > 0) {
+                        ordersTabAddOrderViewModel.orders.forEach((o) {
+                          double wtf = o['quantity'].toDouble();
+                          subTotal = (double.parse(subTotal) +
+                                  double.parse(o['price']) * wtf)
+                              .toString();
+                        });
+                      }
+
+                      String deliveryFee = "88.00";
+                      String total =
+                          (double.parse(subTotal) + double.parse(deliveryFee))
+                              .toString();
+
+                      return OrderTotalSummary(
+                        subTotal: subTotal,
+                        deliveryFee: deliveryFee,
+                        total: total,
+                      );
+                    })
                   ],
                 ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: primaryColor,
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(0),
+                          bottom: Radius.circular(0),
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      'Add',
+                      style: TextStyle(
+                        // fontSize: 16,
+                        color: accentColor,
+                      ),
+                    ),
+                    onPressed: () {},
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      side: BorderSide(width: 1, color: Colors.black),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(0),
+                          bottom: Radius.circular(0),
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      'Draft',
+                      style: TextStyle(
+                        color: subTextColor,
+                      ),
+                    ),
+                    onPressed: () {},
+                  )
+                ],
               ),
             ),
           ],

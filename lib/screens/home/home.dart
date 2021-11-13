@@ -7,6 +7,7 @@ import 'package:sandys_food_express/screens/home/widgets/app-bar-title.dart';
 import 'package:sandys_food_express/screens/home/widgets/drawer-item.dart';
 import 'package:sandys_food_express/screens/menu/menu.dart';
 import 'package:sandys_food_express/screens/menu/menu-view-model.dart';
+import 'package:sandys_food_express/screens/orders/orders-tab-add-order-view-model.dart';
 import 'package:sandys_food_express/screens/orders/orders.dart';
 import 'package:sandys_food_express/screens/ordersqueue/ordersqueue.dart';
 import 'package:sandys_food_express/service-locator.dart';
@@ -28,8 +29,17 @@ class _HomeState extends State<Home> {
     }
 
     if (settings.name == Orders.routeName) {
-      page = ChangeNotifierProvider(
-        create: (context) => locator.get<MenuViewModel>(),
+      ;
+
+      page = MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => locator.get<MenuViewModel>(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => locator.get<OrdersTabAddOrderViewModel>(),
+          )
+        ],
         child: Orders(),
       );
     }
